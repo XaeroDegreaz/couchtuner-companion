@@ -1,0 +1,7 @@
+/* Without this, Bootstrap.css interferes with the layout of Couchtuner*/
+* {
+    box-sizing: content-box;
+}
+#ccSidebarToggle{
+    box-sizing: border-box;
+}

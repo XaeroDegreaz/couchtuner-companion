@@ -1,0 +1,44 @@
+{
+    "manifest_version": 2,
+
+    "name": "Couchtuner Companion",
+    "description": "This extension extends the functionality of Couchtuner by way of bookmarks, and history.",
+    "version": "0.0.1",
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://www.couchtuner.com/*",
+                "http://www.couchtuner.eu/*",
+                "http://www.zzstream.li/*"
+            ],
+            "css": [
+                "css/bootstrap.min.css",
+                "css/bootstrap-theme.css",
+                "css/bootstrap-additions.min.css",
+                "css/angular-motion.min.css",
+                "css/fixbootstrap.css"
+            ],
+            "js": [
+                "js/jquery-2.1.1.min.js",
+                "js/jquery-regex.js",
+                "js/angular.js",
+                "js/angular-animate.min.js",
+                "js/ui-bootstrap-tpls-0.11.2.js",
+                "js/angular-strap.min.js",
+                "js/angular-strap.tpl.min.js",
+                "js/linq.js",
+                "js/test.js",
+                "js/services/SyncService.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "html/sidebar.html",
+        "js/angular-animate.min.js.map",
+        "js/angular-strap.min.js.map",
+        "js/jquery-2.1.1.min.map"
+    ]
+}
