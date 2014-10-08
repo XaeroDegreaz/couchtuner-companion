@@ -129,6 +129,11 @@ var app = angular.module("CouchtunerCompanion", ['ui.bootstrap', 'mgcrea.ngStrap
                 var a = $(this);
                 var href = a.attr("href");
                 var html = a.html();
+
+                if(!a.parent().is("li") && !a.parent().is("strong")) {
+                    return;
+                }
+
                 if (!href ||
                     href.indexOf("#") == 0 ||
                     href.indexOf("google") >= 0 ||
