@@ -17,8 +17,8 @@
             "css": [
                 "css/bootstrap.min.css",
                 "css/bootstrap-theme.css",
-                "css/bootstrap-additions.min.css",
                 "css/angular-motion.min.css",
+                "css/bootstrap-additions.min.css",
                 "css/fixbootstrap.css"
             ],
             "js": [
@@ -37,6 +37,10 @@
     ],
     "web_accessible_resources": [
         "html/sidebar.html",
+        "html/settingsTab.html",
+        "html/bookmarksTab.html",
+        "html/historyTab.html",
+        "html/sidebarButton.html",
         "js/angular-animate.min.js.map",
         "js/angular-strap.min.js.map",
         "js/jquery-2.1.1.min.map"

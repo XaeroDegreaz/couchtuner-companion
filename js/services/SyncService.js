@@ -13,6 +13,10 @@
                 return data["history"];
             },
 
+            setHistory: function (history) {
+                return data["history"] = history;
+            },
+
             getBookmarks: function () {
                 if (!data["bookmarks"]) {
                     return (data["bookmarks"] = []);
@@ -24,10 +28,6 @@
 
             setBookmarks: function (bookmarks) {
                 return data["bookmarks"] = bookmarks;
-            },
-
-            setHistory: function (history) {
-                return data["history"] = history;
             },
 
             sync: function (key) {

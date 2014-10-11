@@ -1,0 +1,8 @@
+<div ng-repeat="item in syncService.getHistory() track by item.time">
+    <div>
+        <button class="btn btn-xs btn-warning" ng-click="removeHistoryItem(item)">
+            -
+        </button>
+        {{item.time | date:'mediumDate'}} - <a href="{{item.url}}">{{item.name}}</a>
+    </div>
+</div>

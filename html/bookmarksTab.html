@@ -1,0 +1,9 @@
+<div ng-repeat="item in syncService.getBookmarks() track by item.url">
+    <div>
+        <button class="btn btn-xs btn-warning"
+                ng-click="performBookmarkButtonSyncOperation(true, item.url, item.name)">
+            -
+        </button>
+        <a href="{{item.url}}">{{item.name}}</a>
+    </div>
+</div>

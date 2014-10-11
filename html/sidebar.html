@@ -11,28 +11,19 @@
                         <tab-heading>
                             <i class="glyphicon glyphicon-bookmark"></i> Bookmarks
                         </tab-heading>
-                        <div ng-repeat="item in syncService.getBookmarks() track by item.url">
-                            <div>
-                                <button class="btn btn-xs btn-warning"
-                                        ng-click="doBookmarkRoutine(true, item.url, item.name)">
-                                    -
-                                </button>
-                                <a href="{{item.url}}">{{item.name}}</a>
-                            </div>
-                        </div>
+                        <div ng-include="templates.bookmarksTab"/>
                     </tab>
                     <tab>
                         <tab-heading>
                             <i class="glyphicon glyphicon-time"></i> History
                         </tab-heading>
-                        <div ng-repeat="item in syncService.getHistory() track by item.time">
-                            <div>
-                                <button class="btn btn-xs btn-warning" ng-click="removeHistoryItem(item)">
-                                    -
-                                </button>
-                                {{item.time | date:'mediumDate'}} - <a href="{{item.url}}">{{item.name}}</a>
-                            </div>
-                        </div>
+                        <div ng-include="templates.historyTab"/>
+                    </tab>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-cloud"></i> Settings
+                        </tab-heading>
+                        <div ng-include="templates.settingsTab"/>
                     </tab>
                 </tabset>
             </div>
