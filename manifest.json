@@ -16,22 +16,22 @@
             ],
             "css": [
                 "css/bootstrap.min.css",
-                "css/bootstrap-theme.css",
                 "css/angular-motion.min.css",
                 "css/bootstrap-additions.min.css",
                 "css/fixbootstrap.css"
             ],
             "js": [
-                "js/jquery-2.1.1.min.js",
-                "js/jquery-regex.js",
-                "js/angular.js",
-                "js/angular-animate.min.js",
-                "js/ui-bootstrap-tpls-0.11.2.js",
-                "js/angular-strap.min.js",
-                "js/angular-strap.tpl.min.js",
-                "js/linq.js",
+                "js/lib/jquery-2.1.1.min.js",
+                "js/lib/jquery-regex.js",
+                "js/lib/angular.js",
+                "js/lib/angular-animate.min.js",
+                "js/lib/ui-bootstrap-tpls-0.11.2.js",
+                "js/lib/angular-strap.min.js",
+                "js/lib/angular-strap.tpl.min.js",
+                "js/lib/linq.js",
                 "js/test.js",
-                "js/services/SyncService.js"
+                "js/services/SyncService.js",
+                "js/controllers/SettingsController.js"
             ]
         }
     ],
@@ -41,8 +41,8 @@
         "html/bookmarksTab.html",
         "html/historyTab.html",
         "html/sidebarButton.html",
-        "js/angular-animate.min.js.map",
-        "js/angular-strap.min.js.map",
-        "js/jquery-2.1.1.min.map"
+        "js/lib/angular-animate.min.js.map",
+        "js/lib/angular-strap.min.js.map",
+        "js/lib/jquery-2.1.1.min.map"
     ]
 }

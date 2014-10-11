@@ -22,13 +22,17 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             "template": chrome.extension.getURL("html/sidebar.html"),
             "placement": "left",
             "animation": "am-fadeAndSlideLeft",
-            "show": false,
+            "show": true,
             "scope": $scope
         });
         $scope.templates = {
             settingsTab: chrome.extension.getURL("html/settingsTab.html"),
             bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
             historyTab: chrome.extension.getURL("html/historyTab.html")
+        };
+
+        $scope.go = function(url) {
+            window.location.href = url;
         };
 
         //# Constructor
@@ -42,8 +46,6 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
         $scope.openSidebar = function () {
             sidebar.show();
         };
-
-        $scope.optionTrack = "No";
 
         function retrieveData(callback) {
             syncService.retrieve('bookmarks', function (items) {

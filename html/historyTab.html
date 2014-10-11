@@ -1,8 +1,11 @@
-<div ng-repeat="item in syncService.getHistory() track by item.time">
-    <div>
-        <button class="btn btn-xs btn-warning" ng-click="removeHistoryItem(item)">
+<div ng-repeat="item in syncService.getHistory() track by item.time"
+     ng-click="go(item.url)"
+     class="btn-primary"
+     style="cursor: pointer">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-warning" ng-click="removeHistoryItem(item)">
             -
         </button>
-        {{item.time | date:'mediumDate'}} - <a href="{{item.url}}">{{item.name}}</a>
+        <span class="simplenavstuff">{{item.time | date:'mediumDate'}} - {{item.name}}</span>
     </div>
 </div>
