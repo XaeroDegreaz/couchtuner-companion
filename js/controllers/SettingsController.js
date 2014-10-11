@@ -4,6 +4,7 @@
 (function(){
     app.controller("SettingsController", ["$scope", "$http", "$aside", 'SyncService', function ($scope, $http, $aside, SyncService) {
         var syncService = $scope.syncService = SyncService;
-        $scope.optionTracks = "No";
+        $scope.historyTracking = "Off";
+        $scope.bookmarkStorage = "Local";
     }]);
 })();

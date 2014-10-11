@@ -1,9 +1,9 @@
 <div ng-repeat="item in syncService.getHistory() track by item.time"
      ng-click="go(item.url)"
-     class="btn-primary"
-     style="cursor: pointer">
+     class="btn-default"
+     style="cursor: pointer; margin: 1px;">
     <div class="btn-group">
-        <button class="btn btn-sm btn-warning" ng-click="removeHistoryItem(item)">
+        <button class="btn btn-sm btn-danger" ng-click="removeHistoryItem(item)">
             -
         </button>
         <span class="simplenavstuff">{{item.time | date:'mediumDate'}} - {{item.name}}</span>

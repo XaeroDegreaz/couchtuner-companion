@@ -1,20 +1,35 @@
-<div class="btn-group">
-    <div>Track "watch" history using:</div>
-    <label class="btn btn-sm btn-danger" ng-model="optionHistory" btn-radio="'Never'" uncheckable>No Tracking</label>
-    <label class="btn btn-sm btn-primary" ng-model="optionHistory" btn-radio="'Locally'" uncheckable>Save Local</label>
-    <label class="btn btn-sm btn-success" ng-model="optionHistory" btn-radio="'Sync'" uncheckable>Google Sync</label>
-</div><br/>
-<div class="btn-group">
-    <div>Save bookmarks using:</div>
-    <label class="btn btn-sm btn-primary" ng-model="optionBookmarks" btn-radio="'Locally'" uncheckable>Save Local</label>
-    <label class="btn btn-sm btn-success" ng-model="optionBookmarks" btn-radio="'Sync'" uncheckable>Google Sync</label>
-</div>
 <div>
-    <button class="btn btn-sm btn-primary">Export all data</button>
-</div>
-<div>
-    <button class="btn btn-sm btn-primary">Import saved data</button>
-</div>
-<div>
-    <button class="btn btn-sm btn-danger">Clear all data</button>
+    <div class="btn-default" style="margin-bottom: 1px;">
+        <div dropdown class="btn-group-vertical">
+            <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
+                <span class="caret"></span> History Tracking => ({{historyTracking}})
+            </div>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="historyTracking = 'Off'">Off</a></li>
+                <li><a href="#" ng-click="historyTracking = 'Local'">Save locally</a></li>
+                <li><a href="#" ng-click="historyTracking = 'Sync'">Save with Google Sync</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="btn-default" style="margin-bottom: 1px;">
+        <div dropdown class="btn-group-vertical">
+            <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
+                <span class="caret"></span> Bookmark Storage => ({{bookmarkStorage}})
+            </div>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="bookmarkStorage = 'Local'">Save locally</a></li>
+                <li><a href="#" ng-click="bookmarkStorage = 'Sync'">Save with Google Sync</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-sm btn-primary">Export all data</button>
+    </div>
+    <div>
+        <button class="btn btn-sm btn-primary">Import saved data</button>
+    </div>
+    <div>
+        <button class="btn btn-sm btn-danger">Clear all data</button>
+    </div>
 </div>

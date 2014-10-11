@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-.btn-primary {
+/*.btn-primary {
     background-image: -webkit-linear-gradient(top, #428bca 0%, #2d6ca2 100%);
     background-image: -o-linear-gradient(top, #428bca 0%, #2d6ca2 100%);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#428bca), to(#2d6ca2));
@@ -28,7 +28,7 @@
 .btn-primary.active {
     background-color: #2d6ca2;
     border-color: #2b669a;
-}
+}*/
 
 .simplenavstuff {
     display: inline-block;

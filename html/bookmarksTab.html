@@ -1,9 +1,9 @@
 <div ng-click="go(item.url)"
      ng-repeat="item in syncService.getBookmarks() track by item.url"
-     class="btn-primary"
-     style="cursor: pointer">
+     class="btn-default"
+     style="cursor: pointer; margin: 1px;">
     <div class="btn-group">
-        <button class="btn btn-sm btn-warning"
+        <button class="btn btn-sm btn-danger"
                 ng-click="performBookmarkButtonSyncOperation(true, item.url, item.name)">
             -
         </button>
