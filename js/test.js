@@ -22,7 +22,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             "template": chrome.extension.getURL("html/sidebar.html"),
             "placement": "left",
             "animation": "am-fadeAndSlideLeft",
-            "show": true,
+            "show": false,
             "scope": $scope
         });
         $scope.templates = {
