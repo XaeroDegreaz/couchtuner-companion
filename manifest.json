@@ -16,6 +16,7 @@
             ],
             "css": [
                 "css/bootstrap.min.css",
+                "css/bootstrap-theme.css",
                 "css/angular-motion.min.css",
                 "css/bootstrap-additions.min.css",
                 "css/fixbootstrap.css"
