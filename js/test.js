@@ -15,8 +15,10 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
     //# http://www.zzstream.li/2014/10/intruders-s1-e7-the-crossing-place.html
     var historyLinkRegex = "((s\\d+)-(e\\d+))|((s\\d+)(e\\d+))";
 
-    app.controller("SidebarController", ["$scope", "$http", "$aside", 'SyncService', function ($scope, $http, $aside, SyncService) {
+    app.controller("SidebarController", ["$scope", "$http", "$aside", 'SyncService', 'LinkService', function ($scope, $http, $aside, SyncService, LinkService) {
         var syncService = $scope.syncService = SyncService;
+        var linkService = $scope.linkService = LinkService;
+
         var sidebar = $aside({
             "title": "Couchtuner Companion",
             "template": chrome.extension.getURL("html/sidebar.html"),
@@ -31,7 +33,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             historyTab: chrome.extension.getURL("html/historyTab.html")
         };
 
-        $scope.go = function(url) {
+        $scope.go = function (url) {
             window.location.href = url;
         };
 
@@ -86,7 +88,8 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                     });
 
                 button.attr("style", "margin-right: 2px; width: 10px;");
-                syncService.links[url] = button;
+                linkService.linkBookmarkButton(getShowNameFromLink(a), button);
+                //syncService.links[url] = button;
             });
         }
 
@@ -103,11 +106,6 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             });
 
             $scope.performBookmarkButtonSyncOperation(isBookmarked, url, name);
-
-            var buttonType = isBookmarked ? "success" : "warning";
-            var buttonText = isBookmarked ? "+" : "-";
-
-            button.attr("class", "btn btn-xs btn-" + buttonType).html(buttonText);
         }
 
         $scope.performBookmarkButtonSyncOperation = function (isBookmarked, url, name) {
@@ -123,12 +121,21 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                     return x.url !== url
                 }).toArray();
                 syncService.setBookmarks(remaining);
+            }
 
-                if (syncService.links[url]) {
-                    var button = syncService.links[url];
-                    button.attr("class", "btn btn-xs btn-success").html("+");
+            var buttonType = isBookmarked ? "success" : "warning";
+            var buttonText = isBookmarked ? "+" : "-";
+
+            if (linkService.getLinks()[name]) {
+                if (linkService.getLinks()[name] instanceof Array) {
+                    linkService.getLinks()[name].forEach(function (b) {
+                        b.attr("class", "btn btn-xs btn-" + buttonType).html(buttonText);
+                    });
+                } else {
+                    button.attr("class", "btn btn-xs btn-" + buttonType).html(buttonText);
                 }
             }
+
             syncService.sync('bookmarks');
         };
 

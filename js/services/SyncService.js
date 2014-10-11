@@ -3,7 +3,6 @@
         var data = {};
 
         return {
-            links: [],
             getHistory: function () {
                 if (!data["history"]) {
                     return (data["history"] = []);
