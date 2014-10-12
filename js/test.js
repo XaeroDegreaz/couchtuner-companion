@@ -89,7 +89,6 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
 
                 button.attr("style", "margin-right: 2px; width: 10px;");
                 linkService.linkBookmarkButton(getShowNameFromLink(a), button);
-                //syncService.links[url] = button;
             });
         }
 
