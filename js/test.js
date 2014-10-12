@@ -123,19 +123,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                 syncService.setBookmarks(remaining);
             }
 
-            var buttonType = isBookmarked ? "success" : "warning";
-            var buttonText = isBookmarked ? "+" : "-";
-
-            if (linkService.getLinks()[name]) {
-                if (linkService.getLinks()[name] instanceof Array) {
-                    linkService.getLinks()[name].forEach(function (b) {
-                        b.attr("class", "btn btn-xs btn-" + buttonType).html(buttonText);
-                    });
-                } else {
-                    button.attr("class", "btn btn-xs btn-" + buttonType).html(buttonText);
-                }
-            }
-
+            linkService.toggleBookmarkButtons(isBookmarked, name);
             syncService.sync('bookmarks');
         };
 
