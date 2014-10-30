@@ -5,9 +5,6 @@
     app.service('LinkService', function () {
         var links = [];
         return {
-            getLinks: function () {
-                return links;
-            },
             linkBookmarkButton: function (url, button) {
                 if (links[url]) {
                     var backupButton = links[url];
@@ -18,7 +15,7 @@
                 }
             },
             toggleBookmarkButtons: function (isBookmarked, name) {
-                var buttonType = isBookmarked ? "success" : "warning";
+                var buttonType = isBookmarked ? "success" : "danger";
                 var buttonText = isBookmarked ? "+" : "-";
 
                 if (links[name]) {

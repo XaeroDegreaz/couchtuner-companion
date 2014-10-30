@@ -9,10 +9,13 @@
     ],
     "content_scripts": [
         {
+            "run_at": "document_end",
             "matches": [
-                "http://www.couchtuner.com/*",
-                "http://www.couchtuner.eu/*",
-                "http://www.zzstream.li/*"
+                "http://*.couchtuner.com/*",
+                "http://*.couchtuner.eu/*",
+                "http://*.couchtuner.eu.com/*",
+                "http://*.couchtuner.com.eu/*",
+                "http://*.zzstream.li/*"
             ],
             "css": [
                 "css/bootstrap.min.css",

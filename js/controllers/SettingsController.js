@@ -6,5 +6,11 @@
         var syncService = $scope.syncService = SyncService;
         $scope.historyTracking = "Off";
         $scope.bookmarkStorage = "Local";
+
+        var onInitialize = function(){
+            syncService.retrieve("settings", function(items){
+
+            });
+        }();
     }]);
 })();

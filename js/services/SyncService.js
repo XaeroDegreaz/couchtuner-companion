@@ -3,6 +3,19 @@
         var data = {};
 
         return {
+            getSettings: function () {
+                if (!data["settings"]) {
+                    return (data["settings"] = {
+                        historyTracking: "Off",
+                        bookmarkStorage: "Local"
+                    });
+                }
+                return data["settings"];
+            },
+            setSetting: function (setting, value) {
+                data["settings"][setting] = value;
+                this.sync("settings");
+            },
             getHistory: function () {
                 if (!data["history"]) {
                     return (data["history"] = []);

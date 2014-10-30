@@ -78,8 +78,12 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                     var bool = x.name === getShowNameFromLink(a);
                     return bool;
                 });
-                var buttonType = isBookmarked ? "warning" : "success";
+                var buttonType = isBookmarked ? "danger" : "success";
                 var buttonText = isBookmarked ? "-" : "+";
+                /*
+                 var buttonText = isBookmarked ? "remove" : "bookmark";
+                 var buttonIcon = "<i class='glyphicon glyphicon-" + buttonText + "'></i>"
+                 */
                 var button = $('<button class="btn btn-xs btn-' + buttonType + '">' + buttonText + '</button>')
                     .appendTo(a.parent())
                     .after(a)
@@ -165,12 +169,20 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             return links;
         }
 
+        var hasHistoryPropogated = false;
+
         function parseHistoryTrackableLinks() {
             var reg = $('a:regex(href,' + historyLinkRegex + ')');
             reg.each(function (index) {
                 $(this).click(function (event) {
-                    //event.preventDefault();
-                    $scope.addHistoryItem($(this).attr('href'), $(this).html());
+                    if (!hasHistoryPropogated) {
+                        event.preventDefault();
+                        $scope.addHistoryItem($(this).attr('href'), $(this).html());
+                        hasHistoryPropogated = true;
+                        $(this).trigger('click');
+                    } else {
+                        window.location.href = $(this).attr("href");
+                    }
                 });
             });
             //console.log(reg);
