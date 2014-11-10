@@ -197,6 +197,20 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
             syncService.sync("history");
         };
 
+        $scope.getNiceName = function (string) {
+            var regex = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
+            var groups = regex.exec(string);
+            var showName = groups[1]
+            var season = getNiceNumber(groups[5]);
+            var episode = getNiceNumber(groups[10]);
+
+            return showName + " - S" + season + "E" + episode;
+        };
+
+        function getNiceNumber(number) {
+            return (number >= 0 && number < 10) ? "0" + number : number;
+        }
+
         $scope.addHistoryItem = function (link, name) {
             syncService.getHistory().push({
                 url: link,

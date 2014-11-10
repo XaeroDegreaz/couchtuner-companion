@@ -6,6 +6,6 @@
         <button class="btn btn-sm btn-danger" ng-click="removeHistoryItem(item)">
             -
         </button>
-        <span class="simplenavstuff">{{item.time | date:'mediumDate'}} - {{item.name}}</span>
+        <span class="simplenavstuff">{{item.time | date:'mediumDate'}} - {{getNiceName(item.name)}}</span>
     </div>
 </div>
