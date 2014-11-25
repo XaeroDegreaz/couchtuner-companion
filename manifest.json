@@ -37,7 +37,8 @@
                 "js/services/BookmarkScanService.js",
                 "js/services/HistoryScanService.js",
                 "js/controllers/SidebarController.js",
-                "js/controllers/SettingsController.js"
+                "js/controllers/SettingsController.js",
+                "js/controllers/BookmarkController.js"
             ]
         }
     ],

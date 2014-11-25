@@ -21,10 +21,11 @@
                 return link.html().replace("<strong>", "").replace("</strong>", "");
             },
 
-            generateBookmarkButton: function (isBookmarked) {
+            generateBookmarkButton: function (bookmarkIndex) {
+                var isBookmarked = bookmarkIndex !== -1;
                 var buttonType = isBookmarked ? "danger" : "success";
                 var buttonText = isBookmarked ? "-" : "+";
-                var button = $('<button ng-click="" class="btn btn-xs btn-' + buttonType + '">' + buttonText + '</button>');
+                var button = $("<button ng-click='onBookmarkButtonClick(" + bookmarkIndex + ")' class='btn btn-xs btn-" + buttonType + "'>" + buttonText + "</button>");
                 button.attr("style", "margin-right: 2px; width: 10px;");
                 return button;
             }
@@ -72,16 +73,14 @@
         function createBookmarkButtons() {
             var query = Enumerable.from(bookmarks);
 
-            $(showLinks).each(function (index) {
+            $(showLinks).each(function () {
                 var a = $(this);
-                var url = a.attr('href');
-                var isBookmarked = query.any(function (x) {
-                    return x.name === serviceObject.getShowNameFromLink(a);
-                });
-                var button = serviceObject.generateBookmarkButton(isBookmarked);
+                var bookmarkIndex = bookmarks.indexOf(query.firstOrDefault(function (x) {
+                    var showName = serviceObject.getShowNameFromLink(a);
+                    return x.name === showName;
+                }));
+                var button = serviceObject.generateBookmarkButton(bookmarkIndex);
                 button.appendTo(a.parent()).after(a);
-
-                //linkService.linkBookmarkButton(getShowNameFromLink(a), button);
             });
         }
 

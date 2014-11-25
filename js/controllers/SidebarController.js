@@ -3,8 +3,8 @@
  */
 (function () {
     app.controller('SidebarController', [
-        '$scope', '$aside', 'SyncService', 'BookmarkScanService', 'HistoryScanService',
-        function ($scope, $aside, SyncService, BookmarkScanService, HistoryScanService) {
+        '$scope', '$aside', '$compile', 'SyncService', 'BookmarkScanService', 'HistoryScanService',
+        function ($scope, $aside, $compile, SyncService, BookmarkScanService, HistoryScanService) {
             var sidebar = $aside({
                 "title": "Couchtuner Companion",
                 "template": chrome.extension.getURL("html/sidebar.html"),
@@ -13,6 +13,12 @@
                 "show": false,
                 "scope": $scope
             });
+
+            $scope.tabs = {
+                //settingsTab: chrome.extension.getURL("html/settingsTab.html"),
+                bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html")//,
+                // historyTab: chrome.extension.getURL("html/historyTab.html")
+            };
 
             var onInitialize = function () {
                 //# Tell sync service to do whatever it needs to do to retrieve information from Chrome storage.
@@ -23,6 +29,8 @@
                     //# enter an item into the history to be synced, and also represent previously
                     //# viewed shows in an easy to identify manner.
                     HistoryScanService.initialize();
+
+                    $compile($("body"))($scope);
                 });
             }();
 
@@ -32,6 +40,10 @@
 
             $scope.openSidebar = function () {
                 sidebar.show();
+            };
+
+            $scope.onBookmarkButtonClick = function (bookmarkIndex) {
+                console.log(bookmarkIndex);
             };
         }
     ]);
