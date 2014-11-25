@@ -1,8 +1,9 @@
 /**
  * Created by XaeroDegreaz on 10/5/2014.
  */
-$("html").attr("ng-app", "CouchtunerCompanion");
-$("html").attr("ng-controller", "SidebarController");
+var htmlRoot = $("html");
+htmlRoot.attr("ng-app", "CouchtunerCompanion");
+htmlRoot.attr("ng-controller", "SidebarController");
 $("body").prepend(
     $("<div ng-include=\"'" + chrome.extension.getURL("html/sidebarButton.html") + "'\"/>")
 );
