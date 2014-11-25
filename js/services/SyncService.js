@@ -3,6 +3,13 @@
         var data = {};
 
         return {
+            initialize: function (callback) {
+                console.log("Initializing sync service...");
+                chrome.storage.sync.get(null, function (storedData) {
+                    data = storedData;
+                    callback();
+                });
+            },
             getSettings: function () {
                 if (!data["settings"]) {
                     return (data["settings"] = {

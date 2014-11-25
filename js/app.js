@@ -16,7 +16,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
     //# http://www.zzstream.li/2014/10/intruders-s1-e7-the-crossing-place.html
     var historyLinkRegex = "((s\\d+)-(e\\d+))|((s\\d+)(e\\d+))";
 
-    app.controller("SidebarController", ["$scope", "$http", "$aside", 'SyncService', 'LinkService', function ($scope, $http, $aside, SyncService, LinkService) {
+    app.controller("OldSidebarController", ["$scope", "$http", "$aside", 'SyncService', 'LinkService', function ($scope, $http, $aside, SyncService, LinkService) {
         var syncService = $scope.syncService = SyncService;
         var linkService = $scope.linkService = LinkService;
 
