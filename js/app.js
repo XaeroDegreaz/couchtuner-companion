@@ -179,6 +179,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                     if (!hasHistoryPropogated) {
                         event.preventDefault();
                         $scope.addHistoryItem($(this).attr('href'), $(this).html());
+                        //# Place this property inside the link instead of scope polluting
                         hasHistoryPropogated = true;
                         $(this).trigger('click');
                     } else {

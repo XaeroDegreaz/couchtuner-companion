@@ -33,6 +33,7 @@
                 "js/lib/linq.js",
                 "js/app.js",
                 "js/services/SyncService.js",
+                "js/services/SettingsService.js",
                 "js/services/LinkService.js",
                 "js/services/BookmarkScanService.js",
                 "js/services/HistoryScanService.js",

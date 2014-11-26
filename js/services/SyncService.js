@@ -65,10 +65,7 @@
 
             getSettings: function () {
                 if (!data["settings"]) {
-                    return (data["settings"] = {
-                        historyTracking: "Off",
-                        bookmarkStorage: "Local"
-                    });
+                    return (data["settings"] = []);
                 }
                 return data["settings"];
             },
