@@ -41,10 +41,6 @@
             $scope.openSidebar = function () {
                 sidebar.show();
             };
-
-            $scope.onBookmarkButtonClick = function (bookmarkIndex) {
-                console.log(bookmarkIndex);
-            };
         }
     ]);
 })();

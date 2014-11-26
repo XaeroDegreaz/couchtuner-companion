@@ -10,6 +10,14 @@
                     callback();
                 });
             },
+            removeBookmark: function (bookmarkIndex) {
+                data['bookmarks'].splice(bookmarkIndex, 1);
+                return data['bookmarks'];
+            },
+            addBookmark: function (bookmarkObject) {
+                data['bookmarks'].push(bookmarkObject);
+                return data['bookmarks'];
+            },
             getSettings: function () {
                 if (!data["settings"]) {
                     return (data["settings"] = {
@@ -40,8 +48,6 @@
                 if (!data["bookmarks"]) {
                     return (data["bookmarks"] = []);
                 }
-                var q = Enumerable.from(data["bookmarks"]);
-                data["bookmarks"] = q.orderBy("$.name").toArray();
                 return data["bookmarks"];
             },
 
