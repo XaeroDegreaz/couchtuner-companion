@@ -5,16 +5,21 @@
     app.service('SettingsService', [
         'SyncService',
         function (SyncService) {
-            return {
+            var serviceObject = {
                 settings: {
                     bookmarkSync: false,
                     historySync: false
                 },
                 initialize: function () {
-                    var settings = SyncService.getSettings();
-                    this.settings = (settings.length > 0) ? settings : this.settings;
+                    this.settings = SyncService.getSettings(this.settings);
+                },
+                save: function () {
+                    SyncService.saveSettings();
                 }
-            }
+            };
+
+
+            return serviceObject;
         }
     ]);
 })();

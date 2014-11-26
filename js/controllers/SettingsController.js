@@ -6,6 +6,10 @@
         '$scope', 'SettingsService',
         function ($scope, SettingsService) {
             $scope.settings = SettingsService.settings;
+
+            $scope.$watchCollection('settings', function () {
+                SettingsService.save();
+            });
         }
     ]);
 })();

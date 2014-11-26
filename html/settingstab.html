@@ -2,23 +2,23 @@
     <div class="btn-default" style="margin-bottom: 1px;">
         <div dropdown class="btn-group-vertical">
             <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> History Tracking => ({{settings.historySync}})
+                <span class="caret"></span> History Tracking => ({{settings.historySync||'Off'}})
             </div>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#" ng-click="settings.historySync = false">Off</a></li>
                 <li><a href="#" ng-click="settings.historySync = 'Local'">Save locally</a></li>
-                <li><a href="#" ng-click="settings.historySync = 'Sync'">Save with Google Sync</a></li>
+                <li><a href="#" ng-click="settings.historySync = 'Sync'">Save with Chrome Sync</a></li>
             </ul>
         </div>
     </div>
     <div class="btn-default" style="margin-bottom: 1px;">
         <div dropdown class="btn-group-vertical">
             <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> Bookmark Storage => ({{settings.bookmarkSync}})
+                <span class="caret"></span> Bookmark Storage => ({{settings.bookmarkSync?'Sync':'Local'}})
             </div>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#" ng-click="settings.bookmarkSync = false">Save locally</a></li>
-                <li><a href="#" ng-click="settings.bookmarkSync = true">Save with Google Sync</a></li>
+                <li><a href="#" ng-click="settings.bookmarkSync = true">Save with Chrome Sync</a></li>
             </ul>
         </div>
     </div>

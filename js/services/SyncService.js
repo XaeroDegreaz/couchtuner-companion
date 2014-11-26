@@ -3,7 +3,10 @@
         var data = {
             bookmarks: [],
             history: [],
-            settings: []
+            settings: {
+                bookmarkSync: false,
+                historySync: false
+            }
         };
 
         function sync(key, callback) {
@@ -14,11 +17,28 @@
                 payload[key] = [];
             }
 
-            chrome.storage.sync.set(payload, function () {
+            var saveFunction = getSaveFunction(key);
+
+            saveFunction.set(payload, function () {
                 if (callback) {
                     callback();
                 }
             });
+        }
+
+        function getSaveFunction(key) {
+            var storageSync = chrome.storage.sync;
+            var storageLocal = chrome.storage.local;
+
+            switch (key) {
+                case 'bookmarks':
+                    return (data['settings'].bookmarkSync) ? storageSync : storageLocal;
+                case 'history':
+                    return (data['settings'].historySync === 'Sync') ? storageSync : storageLocal;
+                case 'settings':
+                    return storageSync;
+            }
+            console.error("Could not determine save function to use.", key);
         }
 
         function clear() {
@@ -28,21 +48,38 @@
         return {
             initialize: function (callback) {
                 console.log("Initializing sync service...");
-                //# Retrieve all data at once.
-                chrome.storage.sync.get(null, function (storedData) {
-                    data = storedData;
-                    var query = Enumerable.from(data['bookmarks']);
-                    var bookmarks = query.where('$ !== null').toArray();
-                    if (bookmarks.length != data['bookmarks'].length) {
-                        console.log("Deleted null keys. Resyncing...");
-                        data['bookmarks'] = bookmarks;
-                        sync('bookmarks', function () {
-                            callback();
-                        });
-                    } else {
-                        data['bookmarks'] = bookmarks;
-                        callback();
+                //# Settings first
+                getSaveFunction('settings').get('settings', function (storedData) {
+                    if (storedData['settings']) {
+                        data['settings'] = storedData['settings'];
                     }
+
+                    //# Bookmarks
+                    getSaveFunction('bookmarks').get('bookmarks', function (storedData) {
+                        if (storedData['bookmarks']) {
+                            data['bookmarks'] = storedData['bookmarks'];
+                        }
+
+                        var query = Enumerable.from(data['bookmarks']);
+                        var bookmarks = query.where('$ !== null').toArray();
+                        if (bookmarks.length != data['bookmarks'].length) {
+                            console.log("Deleted null keys. Resyncing...");
+                            data['bookmarks'] = bookmarks;
+                            sync('bookmarks', function () {
+                                callback();
+                            });
+                        } else {
+                            data['bookmarks'] = bookmarks;
+                            callback();
+                        }
+                    });
+
+                    //# History
+                    getSaveFunction('history').get('history', function (storedData) {
+                        if (storedData['history']) {
+                            data['history'] = storedData['history'];
+                        }
+                    });
                 });
             },
 
@@ -63,9 +100,13 @@
                 return data['bookmarks'];
             },
 
-            getSettings: function () {
+            saveSettings: function () {
+                sync('settings');
+            },
+
+            getSettings: function (defaultObject) {
                 if (!data["settings"]) {
-                    return (data["settings"] = []);
+                    return (data["settings"] = defaultObject);
                 }
                 return data["settings"];
             },
