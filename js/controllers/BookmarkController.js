@@ -12,8 +12,8 @@
             }();
 
             function getSortedBookmarks() {
-                var q = Enumerable.from(SyncService.getBookmarks());
-                $scope.bookmarks = q.orderBy("$.name").toArray();
+                var query = Enumerable.from(SyncService.getBookmarks());
+                $scope.bookmarks = query.where("$ !== null").orderBy("$.name").toArray();
             }
 
             $scope.onBookmarkRemove = function ($event, bookmark) {

@@ -29,8 +29,6 @@
                     //# enter an item into the history to be synced, and also represent previously
                     //# viewed shows in an easy to identify manner.
                     HistoryScanService.initialize();
-
-                    $compile($("body"))($scope);
                 });
             }();
 

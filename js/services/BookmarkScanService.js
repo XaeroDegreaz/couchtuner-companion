@@ -56,8 +56,9 @@
                 bookmark: function (linkIndex) {
                     var link = showLinks[linkIndex];
                     var showName = this.getShowNameFromLink(link);
-                    bookmarks = SyncService.addBookmark({name: showName, url: link.attr('href')});
-                    var bookmarkIndex = bookmarks.length - 1;
+                    var bookmark = {name: showName, url: link.attr('href')};
+                    bookmarks = SyncService.addBookmark(bookmark);
+                    var bookmarkIndex = bookmarks.indexOf(bookmark);
                     var query = Enumerable.from(showLinks);
                     var links = query.where(function (x) {
                         return serviceObject.getShowNameFromLink(x) === showName;

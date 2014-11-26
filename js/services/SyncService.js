@@ -5,13 +5,30 @@
         return {
             initialize: function (callback) {
                 console.log("Initializing sync service...");
+                var sync = this.sync;
                 chrome.storage.sync.get(null, function (storedData) {
                     data = storedData;
-                    callback();
+                    var query = Enumerable.from(data['bookmarks']);
+                    var bookmarks = query.where('$ !== null').toArray();
+                    if (bookmarks.length != data['bookmarks'].length) {
+                        console.log("Deleted null keys. Resyncing...");
+                        data['bookmarks'] = bookmarks;
+                        sync('bookmarks', function () {
+                            callback();
+                        });
+                    } else {
+                        data['bookmarks'] = bookmarks;
+                        callback();
+                    }
                 });
             },
             removeBookmark: function (bookmarkIndex) {
-                data['bookmarks'].splice(bookmarkIndex, 1);
+                //# We null here instead of splice so that bookmark buttons will not colide
+                //# due to the potential of assigning a duplicate bookmarkIndex on the click event.
+                //# We instead null, and the ids will be steadily incremented. When the extension
+                //# is loaded on the next page load, we will cull the null keys at that time
+                //# since we don't need any multiple-page-load-persistent keys.
+                data['bookmarks'][bookmarkIndex] = null;
                 this.sync('bookmarks');
                 return data['bookmarks'];
             },
@@ -57,7 +74,7 @@
                 return data["bookmarks"] = bookmarks;
             },
 
-            sync: function (key) {
+            sync: function (key, callback) {
                 var payload = {};
                 payload[key] = data[key];
 
@@ -66,7 +83,9 @@
                 }
 
                 chrome.storage.sync.set(payload, function () {
-                    //console.log("Sync: " + data[key]);
+                    if (callback) {
+                        callback();
+                    }
                 });
             },
 
