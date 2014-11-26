@@ -58,9 +58,16 @@
                     var showName = this.getShowNameFromLink(link);
                     bookmarks = SyncService.addBookmark({name: showName, url: link.attr('href')});
                     var bookmarkIndex = bookmarks.length - 1;
-                    var button = this.generateBookmarkButton(bookmarkIndex, linkIndex);
-                    link.bookmarkButton.replaceWith(button);
-                    link.bookmarkButton = button;
+                    var query = Enumerable.from(showLinks);
+                    var links = query.where(function (x) {
+                        return serviceObject.getShowNameFromLink(x) === showName;
+                    }).toArray();
+                    $(links).each(function (linkIndex, link) {
+                        linkIndex = showLinks.indexOf(link);
+                        var button = serviceObject.generateBookmarkButton(bookmarkIndex, linkIndex);
+                        link.bookmarkButton.replaceWith(button);
+                        link.bookmarkButton = button;
+                    });
                 }
             };
 
@@ -86,13 +93,8 @@
                         return;
                     }
 
-                    //# Clean this using regex..
-                    if (!href ||
-                        href.indexOf("#") == 0 ||
-                        href.indexOf("google") >= 0 ||
-                        //# Episode list area
-                        html.indexOf("Season") >= 1 || href.indexOf("season") > 1 ||
-                        html.indexOf("Episode") >= 1 || href.indexOf("episode\\-") > 1) {
+                    var regex = /(#)|(google)|(season)|(episode\-)|(tv\-list)/i;
+                    if (!href || regex.exec(href)) {
                         return;
                     }
 
