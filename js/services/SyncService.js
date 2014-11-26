@@ -83,6 +83,10 @@
                 });
             },
 
+            getDataObject: function () {
+                return data;
+            },
+
             removeBookmark: function (bookmarkIndex) {
                 //# We null here instead of splice so that bookmark buttons will not colide
                 //# due to the potential of assigning a duplicate bookmarkIndex on the click event.

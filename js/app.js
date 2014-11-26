@@ -202,7 +202,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
         $scope.getNiceName = function (string) {
             var regex = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
             var groups = regex.exec(string);
-            var showName = groups[1]
+            var showName = groups[1];
             var season = getNiceNumber(groups[5]);
             var episode = getNiceNumber(groups[10]);
 

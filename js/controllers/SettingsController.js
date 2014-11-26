@@ -6,6 +6,7 @@
         '$scope', 'SettingsService',
         function ($scope, SettingsService) {
             $scope.settings = SettingsService.settings;
+            $scope.settingsService = SettingsService;
 
             $scope.$watchCollection('settings', function () {
                 SettingsService.save();

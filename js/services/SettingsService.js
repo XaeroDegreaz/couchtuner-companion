@@ -15,10 +15,11 @@
                 },
                 save: function () {
                     SyncService.saveSettings();
+                },
+                getDataObject: function () {
+                    return JSON.stringify(SyncService.getDataObject(), null, 2);
                 }
             };
-
-
             return serviceObject;
         }
     ]);
