@@ -12,10 +12,12 @@
             },
             removeBookmark: function (bookmarkIndex) {
                 data['bookmarks'].splice(bookmarkIndex, 1);
+                this.sync('bookmarks');
                 return data['bookmarks'];
             },
             addBookmark: function (bookmarkObject) {
                 data['bookmarks'].push(bookmarkObject);
+                this.sync('bookmarks');
                 return data['bookmarks'];
             },
             getSettings: function () {
