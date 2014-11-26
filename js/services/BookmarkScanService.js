@@ -15,8 +15,8 @@
             var serviceObject = {
                 initialize: function () {
                     bookmarks = SyncService.getBookmarks();
-                    setShowLinks();
-                    createBookmarkButtons();
+                    populateShowLinks();
+                    generateBookmarkButtons();
                 },
 
                 getShowNameFromLink: function (link) {
@@ -32,7 +32,6 @@
                     button.click(function () {
                         onBookmarkButtonClick(bookmarkIndex, linkIndex);
                     });
-                    //$compile(button)($rootScope);
                     return button;
                 },
 
@@ -56,7 +55,7 @@
                 bookmark: function (linkIndex) {
                     var link = showLinks[linkIndex];
                     var showName = this.getShowNameFromLink(link);
-                    var bookmark = {name: showName, url: link.attr('href')};
+                    var bookmark = new Bookmark(showName, link.attr('href'));
                     bookmarks = SyncService.addBookmark(bookmark);
                     var bookmarkIndex = bookmarks.indexOf(bookmark);
                     var query = Enumerable.from(showLinks);
@@ -72,6 +71,11 @@
                 }
             };
 
+            function Bookmark(name, url) {
+                this.name = name;
+                this.url = url;
+            }
+
             function onBookmarkButtonClick(bookmarkIndex, linkIndex) {
                 console.log(bookmarkIndex, linkIndex);
                 if (bookmarkIndex === -1) {
@@ -84,7 +88,7 @@
             /**
              * Create an array of qualified show links, wrapped in a jQuery selector.
              */
-            function setShowLinks() {
+            function populateShowLinks() {
                 $('.entry a[href], #left a[href], #right a[href] ').each(function (index) {
                     var a = $(this);
                     var href = a.attr("href");
@@ -115,7 +119,7 @@
                 });
             }
 
-            function createBookmarkButtons() {
+            function generateBookmarkButtons() {
                 var query = Enumerable.from(bookmarks);
                 $(showLinks).each(function (linkIndex, a) {
                     var bookmarkIndex = bookmarks.indexOf(query.firstOrDefault(function (x) {
