@@ -2,8 +2,11 @@
     "manifest_version": 2,
 
     "name": "Couchtuner Companion",
+    "short_name": "Companion",
     "description": "This extension extends the functionality of Couchtuner by way of bookmarks, and history.",
     "version": "0.9.0",
+    "author": "XaeroDegreaz",
+    "homepage_url": "https://github.com/XaeroDegreaz/couchtuner-companion",
     "permissions": [
         "storage"
     ],
