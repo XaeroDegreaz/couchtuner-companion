@@ -99,7 +99,8 @@
                     }
 
                     var regex = /(#)|(google)|(season)|(episode\-)|(tv\-list)/i;
-                    if (!href || regex.exec(href)) {
+                    var regex2 = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/i;
+                    if (!href || regex.exec(href) || regex2.exec(href)) {
                         return;
                     }
 

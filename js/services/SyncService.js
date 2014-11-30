@@ -26,6 +26,11 @@
             });
         }
 
+        /**
+         * Determine which storage method to use
+         * @param key
+         * @returns {*}
+         */
         function getSaveFunction(key) {
             var storageSync = chrome.storage.sync;
             var storageLocal = chrome.storage.local;
@@ -106,6 +111,18 @@
 
             saveSettings: function () {
                 sync('settings');
+            },
+
+            removeHistoryItem: function (item) {
+                var history = this.getHistory();
+                var index = history.indexOf(item);
+                history.splice(index, 1);
+                sync("history");
+            },
+
+            addHistoryItem: function (historyItemObject) {
+                this.getHistory().push(historyItemObject);
+                sync('history');
             },
 
             getSettings: function (defaultObject) {

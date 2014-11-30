@@ -1,11 +1,18 @@
-<div ng-repeat="item in syncService.getHistory() track by item.time"
-     ng-click="go(item.url)"
-     class="btn-default"
-     style="cursor: pointer; margin: 1px;">
-    <div class="btn-group">
-        <button class="btn btn-sm btn-danger" ng-click="removeHistoryItem(item)">
-            -
-        </button>
-        <span class="simplenavstuff">{{item.time | date:'mediumDate'}} - {{getNiceName(item.name)}}</span>
+<div ng-controller="HistoryController">
+    <div ng-repeat="item in history track by item.time"
+         class="btn-default"
+         ng-click="go(item.url)"
+         style="cursor: pointer; margin: 1px;">
+        <div class="btn-group">
+            <button class="btn btn-sm btn-danger"
+                    ng-click="removeHistoryItem($event, item)">
+                -
+            </button>
+
+            <div class="simplenavstuff">{{item.time | date:'mediumDate'}} -
+                {{getNiceName(item.name)}}
+            </div>
+
+        </div>
     </div>
 </div>

@@ -16,8 +16,8 @@
 
             $scope.tabs = {
                 settingsTab: chrome.extension.getURL("html/settingsTab.html"),
-                bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html")//,
-                // historyTab: chrome.extension.getURL("html/historyTab.html")
+                bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
+                historyTab: chrome.extension.getURL("html/historyTab.html")
             };
 
             var onInitialize = function () {
