@@ -1,27 +1,28 @@
-<div>
+<div ng-controller="SettingsController">
     <div class="btn-default" style="margin-bottom: 1px;">
         <div dropdown class="btn-group-vertical">
             <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> History Tracking => ({{historyTracking}})
+                <span class="caret"></span> History Tracking => ({{settings.historySync||'Off'}})
             </div>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#" ng-click="historyTracking = 'Off'">Off</a></li>
-                <li><a href="#" ng-click="historyTracking = 'Local'">Save locally</a></li>
-                <li><a href="#" ng-click="historyTracking = 'Sync'">Save with Google Sync</a></li>
+                <li><a href="#" ng-click="settings.historySync = false">Off</a></li>
+                <li><a href="#" ng-click="settings.historySync = 'Local'">Save locally</a></li>
+                <li><a href="#" ng-click="settings.historySync = 'Sync'">Save with Chrome Sync</a></li>
             </ul>
         </div>
     </div>
     <div class="btn-default" style="margin-bottom: 1px;">
         <div dropdown class="btn-group-vertical">
             <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> Bookmark Storage => ({{bookmarkStorage}})
+                <span class="caret"></span> Bookmark Storage => ({{settings.bookmarkSync?'Sync':'Local'}})
             </div>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#" ng-click="bookmarkStorage = 'Local'">Save locally</a></li>
-                <li><a href="#" ng-click="bookmarkStorage = 'Sync'">Save with Google Sync</a></li>
+                <li><a href="#" ng-click="settings.bookmarkSync = false">Save locally</a></li>
+                <li><a href="#" ng-click="settings.bookmarkSync = true">Save with Chrome Sync</a></li>
             </ul>
         </div>
     </div>
+    <textarea>{{settingsService.getDataObject()}}</textarea>
 
     <div>
         <button class="btn btn-sm btn-primary">Export all data</button>

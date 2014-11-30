@@ -1,16 +1,16 @@
 /**
  * Created by XaeroDegreaz on 10/11/2014.
  */
-(function(){
-    app.controller("SettingsController", ["$scope", "$http", "$aside", 'SyncService', function ($scope, $http, $aside, SyncService) {
-        var syncService = $scope.syncService = SyncService;
-        $scope.historyTracking = "Off";
-        $scope.bookmarkStorage = "Local";
+(function () {
+    app.controller("SettingsController", [
+        '$scope', 'SettingsService',
+        function ($scope, SettingsService) {
+            $scope.settings = SettingsService.settings;
+            $scope.settingsService = SettingsService;
 
-        var onInitialize = function(){
-            syncService.retrieve("settings", function(items){
-
+            $scope.$watchCollection('settings', function () {
+                SettingsService.save();
             });
-        }();
-    }]);
+        }
+    ]);
 })();

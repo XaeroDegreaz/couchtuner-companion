@@ -1,21 +1,137 @@
 (function () {
     app.service('SyncService', function () {
-        var data = {};
+        var data = {
+            bookmarks: [],
+            history: [],
+            settings: {
+                bookmarkSync: false,
+                historySync: false
+            }
+        };
+
+        function sync(key, callback) {
+            var payload = {};
+            payload[key] = data[key];
+
+            if (!payload[key]) {
+                payload[key] = [];
+            }
+
+            var saveFunction = getSaveFunction(key);
+
+            saveFunction.set(payload, function () {
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+
+        /**
+         * Determine which storage method to use
+         * @param key
+         * @returns {*}
+         */
+        function getSaveFunction(key) {
+            var storageSync = chrome.storage.sync;
+            var storageLocal = chrome.storage.local;
+
+            switch (key) {
+                case 'bookmarks':
+                    return (data['settings'].bookmarkSync) ? storageSync : storageLocal;
+                case 'history':
+                    return (data['settings'].historySync === 'Sync') ? storageSync : storageLocal;
+                case 'settings':
+                    return storageSync;
+            }
+            console.error("Could not determine save function to use.", key);
+        }
+
+        function clear() {
+            chrome.storage.sync.clear();
+        }
 
         return {
-            getSettings: function () {
-                if (!data["settings"]) {
-                    return (data["settings"] = {
-                        historyTracking: "Off",
-                        bookmarkStorage: "Local"
+            initialize: function (callback) {
+                console.log("Initializing sync service...");
+                //# Settings first
+                getSaveFunction('settings').get('settings', function (storedData) {
+                    if (storedData['settings']) {
+                        data['settings'] = storedData['settings'];
+                    }
+
+                    //# Bookmarks
+                    getSaveFunction('bookmarks').get('bookmarks', function (storedData) {
+                        if (storedData['bookmarks']) {
+                            data['bookmarks'] = storedData['bookmarks'];
+                        }
+
+                        var query = Enumerable.from(data['bookmarks']);
+                        var bookmarks = query.where('$ !== null').toArray();
+                        if (bookmarks.length != data['bookmarks'].length) {
+                            console.log("Deleted null keys. Resyncing...");
+                            data['bookmarks'] = bookmarks;
+                            sync('bookmarks', function () {
+                                callback();
+                            });
+                        } else {
+                            data['bookmarks'] = bookmarks;
+                            callback();
+                        }
                     });
+
+                    //# History
+                    getSaveFunction('history').get('history', function (storedData) {
+                        if (storedData['history']) {
+                            data['history'] = storedData['history'];
+                        }
+                    });
+                });
+            },
+
+            getDataObject: function () {
+                return data;
+            },
+
+            removeBookmark: function (bookmarkIndex) {
+                //# We null here instead of splice so that bookmark buttons will not colide
+                //# due to the potential of assigning a duplicate bookmarkIndex on the click event.
+                //# We instead null, and the ids will be steadily incremented. When the extension
+                //# is loaded on the next page load, we will cull the null keys at that time
+                //# since we don't need any multiple-page-load-persistent keys.
+                data['bookmarks'][bookmarkIndex] = null;
+                sync('bookmarks');
+                return data['bookmarks'];
+            },
+
+            addBookmark: function (bookmarkObject) {
+                data['bookmarks'].push(bookmarkObject);
+                sync('bookmarks');
+                return data['bookmarks'];
+            },
+
+            saveSettings: function () {
+                sync('settings');
+            },
+
+            removeHistoryItem: function (item) {
+                var history = this.getHistory();
+                var index = history.indexOf(item);
+                history.splice(index, 1);
+                sync("history");
+            },
+
+            addHistoryItem: function (historyItemObject) {
+                this.getHistory().push(historyItemObject);
+                sync('history');
+            },
+
+            getSettings: function (defaultObject) {
+                if (!data["settings"]) {
+                    return (data["settings"] = defaultObject);
                 }
                 return data["settings"];
             },
-            setSetting: function (setting, value) {
-                data["settings"][setting] = value;
-                this.sync("settings");
-            },
+
             getHistory: function () {
                 if (!data["history"]) {
                     return (data["history"] = []);
@@ -25,46 +141,11 @@
                 return data["history"];
             },
 
-            setHistory: function (history) {
-                return data["history"] = history;
-            },
-
             getBookmarks: function () {
                 if (!data["bookmarks"]) {
                     return (data["bookmarks"] = []);
                 }
-                var q = Enumerable.from(data["bookmarks"]);
-                data["bookmarks"] = q.orderBy("$.name").toArray();
                 return data["bookmarks"];
-            },
-
-            setBookmarks: function (bookmarks) {
-                return data["bookmarks"] = bookmarks;
-            },
-
-            sync: function (key) {
-                var payload = {};
-                payload[key] = data[key];
-
-                if (!payload[key]) {
-                    payload[key] = [];
-                }
-
-                chrome.storage.sync.set(payload, function () {
-                    //console.log("Sync: " + data[key]);
-                });
-            },
-
-            retrieve: function (key, callback) {
-                chrome.storage.sync.get(key, function (items) {
-                    //console.log("Retrieve: " + items);
-                    data[key] = items[key];
-                    callback(items);
-                });
-            },
-
-            clear: function () {
-                chrome.storage.sync.clear();
             }
         }
     });

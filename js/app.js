@@ -16,7 +16,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
     //# http://www.zzstream.li/2014/10/intruders-s1-e7-the-crossing-place.html
     var historyLinkRegex = "((s\\d+)-(e\\d+))|((s\\d+)(e\\d+))";
 
-    app.controller("SidebarController", ["$scope", "$http", "$aside", 'SyncService', 'LinkService', function ($scope, $http, $aside, SyncService, LinkService) {
+    app.controller("OldSidebarController", ["$scope", "$http", "$aside", 'SyncService', 'LinkService', function ($scope, $http, $aside, SyncService, LinkService) {
         var syncService = $scope.syncService = SyncService;
         var linkService = $scope.linkService = LinkService;
 
@@ -179,6 +179,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
                     if (!hasHistoryPropogated) {
                         event.preventDefault();
                         $scope.addHistoryItem($(this).attr('href'), $(this).html());
+                        //# Place this property inside the link instead of scope polluting
                         hasHistoryPropogated = true;
                         $(this).trigger('click');
                     } else {
@@ -201,7 +202,7 @@ var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStra
         $scope.getNiceName = function (string) {
             var regex = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
             var groups = regex.exec(string);
-            var showName = groups[1]
+            var showName = groups[1];
             var season = getNiceNumber(groups[5]);
             var episode = getNiceNumber(groups[10]);
 
