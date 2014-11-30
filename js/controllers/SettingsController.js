@@ -7,9 +7,14 @@
         function ($scope, SettingsService) {
             $scope.settings = SettingsService.settings;
             $scope.settingsService = SettingsService;
+            $scope.haveSettingsChanged = false;
 
-            $scope.$watchCollection('settings', function () {
+            $scope.$watchCollection('settings', function (oldValue, newValue) {
+                if (oldValue === newValue) {
+                    return;
+                }
                 SettingsService.save();
+                $scope.haveSettingsChanged = true;
             });
         }
     ]);

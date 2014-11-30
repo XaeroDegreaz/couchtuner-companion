@@ -1,4 +1,7 @@
 <div ng-controller="HistoryController">
+    <div ng-show="settings.historySync === false" class="alert alert-danger">
+        History tracking is not enabled. You can turn it on from the settings tab.
+    </div>
     <div ng-repeat="item in history track by item.time"
          class="btn-default"
          ng-click="go(item.url)"

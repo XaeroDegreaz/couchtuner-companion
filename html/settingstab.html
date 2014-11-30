@@ -22,7 +22,14 @@
             </ul>
         </div>
     </div>
-    <textarea>{{settingsService.getDataObject()}}</textarea>
+    <br ng-show="haveSettingsChanged"/>
+    <div ng-show="haveSettingsChanged" class="alert alert-success">
+        Settings updated.<br/>
+        Please refresh the window when you're done in here.
+    </div>
+
+
+    <!--<textarea>{{settingsService.getDataObject()}}</textarea>
 
     <div>
         <button class="btn btn-sm btn-primary">Export all data</button>
@@ -32,5 +39,5 @@
     </div>
     <div>
         <button class="btn btn-sm btn-danger">Clear all data</button>
-    </div>
+    </div>-->
 </div>
