@@ -121,6 +121,9 @@
             },
 
             addHistoryItem: function (historyItemObject) {
+                if(!data['settings'].historySync) {
+                    return;
+                }
                 this.getHistory().push(historyItemObject);
                 sync('history');
             },
