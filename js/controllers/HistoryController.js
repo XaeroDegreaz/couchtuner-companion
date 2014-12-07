@@ -15,11 +15,11 @@
             };
 
             $scope.getNiceName = function (string) {
-                var regex = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
+                var regex = /(.+>)?([\w '.,"]+)(<\w+>)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
                 var groups = regex.exec(string);
-                var showName = groups[1];
-                var season = getNiceNumber(groups[5]);
-                var episode = getNiceNumber(groups[10]);
+                var showName = groups[2];
+                var season = getNiceNumber(groups[7]);
+                var episode = getNiceNumber(groups[12]);
 
                 return showName + " - S" + season + "E" + episode;
             };
