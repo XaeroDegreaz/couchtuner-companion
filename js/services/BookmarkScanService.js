@@ -100,7 +100,7 @@
 
                     var regex = /(#)|(google)|(season)|(episode\-)|(tv\-list)/i;
                     var regex2 = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/i;
-                    if (!href || regex.exec(href) || regex2.exec(href)) {
+                    if (!href || regex.exec(href) || regex2.exec(href) || regex2.exec(html)) {
                         return;
                     }
 
