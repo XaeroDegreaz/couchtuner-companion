@@ -15,7 +15,7 @@
             };
 
             $scope.getNiceName = function (string) {
-                var regex = /(.+>)?([\w '.,"]+)(<\w+>)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/;
+                var regex = /(.+>)?([\w '.,"]+)(<\w+>)?(S)(eason)?(\D+)?(\d+)(.+)?(E)(pisode)?(\D+)?(\d+)/;
                 var groups = regex.exec(string);
                 var showName = groups[2];
                 var season = getNiceNumber(groups[7]);
