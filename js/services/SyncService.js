@@ -10,6 +10,27 @@
         };
 
         function sync(key, callback) {
+            var storageMethod = getStorageMethod(key);
+
+            storageMethod.get(key, function (retrieved) {
+                if (key === "bookmarks") {
+                    //# Merge local bookmarks and retrieved bookmarks
+                    $.merge(data[key], retrieved);
+                    var existingBookmarkNames = [];
+
+                    //# We remove dupes, but we still want to keep null elements
+                    //# so that we don't lose array indexes for this page load.
+                    data[key] = $.grep(data[key], function (bookmark) {
+                        if (bookmark && $.inArray(bookmark.name, existingBookmarkNames) !== -1) {
+                            return false;
+                        } else {
+                            existingBookmarkNames.push(!bookmark ? null  : bookmark.name);
+                            return true;
+                        }
+                    });
+                }
+            });
+
             var payload = {};
             payload[key] = data[key];
 
@@ -17,9 +38,7 @@
                 payload[key] = [];
             }
 
-            var saveFunction = getSaveFunction(key);
-
-            saveFunction.set(payload, function () {
+            storageMethod.set(payload, function () {
                 if (callback) {
                     callback();
                 }
@@ -31,7 +50,7 @@
          * @param key
          * @returns {*}
          */
-        function getSaveFunction(key) {
+        function getStorageMethod(key) {
             var storageSync = chrome.storage.sync;
             var storageLocal = chrome.storage.local;
 
@@ -54,13 +73,13 @@
             initialize: function (callback) {
                 console.log("Initializing sync service...");
                 //# Settings first
-                getSaveFunction('settings').get('settings', function (storedData) {
+                getStorageMethod('settings').get('settings', function (storedData) {
                     if (storedData['settings']) {
                         data['settings'] = storedData['settings'];
                     }
 
                     //# Bookmarks
-                    getSaveFunction('bookmarks').get('bookmarks', function (storedData) {
+                    getStorageMethod('bookmarks').get('bookmarks', function (storedData) {
                         if (storedData['bookmarks']) {
                             data['bookmarks'] = storedData['bookmarks'];
                         }
@@ -80,7 +99,7 @@
                     });
 
                     //# History
-                    getSaveFunction('history').get('history', function (storedData) {
+                    getStorageMethod('history').get('history', function (storedData) {
                         if (storedData['history']) {
                             data['history'] = storedData['history'];
                         }
@@ -121,7 +140,7 @@
             },
 
             addHistoryItem: function (historyItemObject) {
-                if(!data['settings'].historySync) {
+                if (!data['settings'].historySync) {
                     return;
                 }
                 this.getHistory().push(historyItemObject);
