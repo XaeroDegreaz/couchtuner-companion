@@ -143,6 +143,9 @@
                 if (!data['settings'].historySync) {
                     return;
                 }
+                if(data.history[0] && data.history[0].name === historyItemObject.name) {
+                    return;
+                }
                 this.getHistory().push(historyItemObject);
                 sync('history');
             },
