@@ -39,6 +39,9 @@
 
             $scope.openSidebar = function () {
                 sidebar.show();
+                $(".aside").scroll(function(e){
+                    $(this).scrollLeft(0);
+                });
             };
         }
     ]);
