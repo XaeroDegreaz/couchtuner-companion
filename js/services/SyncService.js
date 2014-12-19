@@ -24,7 +24,7 @@
                         if (bookmark && $.inArray(bookmark.name, existingBookmarkNames) !== -1) {
                             return false;
                         } else {
-                            existingBookmarkNames.push(!bookmark ? null  : bookmark.name);
+                            existingBookmarkNames.push(!bookmark ? null : bookmark.name);
                             return true;
                         }
                     });
@@ -143,10 +143,11 @@
                 if (!data['settings'].historySync) {
                     return;
                 }
-                if(data.history[0] && data.history[0].name === historyItemObject.name) {
-                    return;
+                if (data.history[0] && data.history[0].name === historyItemObject.name) {
+                    data.history[0] = historyItemObject;
+                } else {
+                    this.getHistory().push(historyItemObject);
                 }
-                this.getHistory().push(historyItemObject);
                 sync('history');
             },
 

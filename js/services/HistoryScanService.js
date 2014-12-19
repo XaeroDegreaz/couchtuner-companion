@@ -19,7 +19,7 @@
                 var a = $(event.target);
                 var link = a.attr('href');
                 var name = a.html();
-                SyncService.addHistoryItem(new HistoryItem(link, name));
+                SyncService.addHistoryItem(new HistoryItem(link, getNiceName(name)));
                 //# Place this property inside the link instead of scope polluting
                 hasHistoryPropogated = true;
                 $(this).trigger('click');
@@ -34,9 +34,28 @@
             this.time = new Date().getTime()
         }
 
+        function getNiceNumber(number) {
+            number = parseInt(number);
+            var niceNumber = (number >= 0 && number < 10) ? "0" + number : number;
+            return niceNumber;
+        }
+
+        function getNiceName (string) {
+            var regex = /(.+>)?([\w '.,"]+)(.+)(S)(eason)?(\D+)?(\d+)(.+)?([eE])(pisode)?(\D+)?(\d+)/;
+            var groups = regex.exec(string);
+            var showName = groups[2];
+            var season = getNiceNumber(groups[7]);
+            var episode = getNiceNumber(groups[12]);
+
+            return showName + " - S" + season + "E" + episode;
+        }
+
         return{
             initialize: function () {
                 parseHistoryTrackableLinks();
+            },
+            getNiceName: function (string) {
+                return getNiceName(string);
             }
         }
     }]);
