@@ -7,7 +7,7 @@ htmlRoot.attr("ng-controller", "SidebarController");
 $("body").prepend(
     $("<div ng-include=\"'" + chrome.extension.getURL("html/sidebarButton.html") + "'\"/>")
 );
-var app = angular.module("CouchtunerCompanion", [ 'ui.bootstrap', 'mgcrea.ngStrap'], function ($compileProvider, $sceDelegateProvider) {
+var app = angular.module("CouchtunerCompanion", ['ui.bootstrap', 'mgcrea.ngStrap'], function ($compileProvider, $sceDelegateProvider) {
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|chrome-extension):|data:image\//);
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
     $sceDelegateProvider.resourceUrlWhitelist(["self", "chrome-extension://**"]);
