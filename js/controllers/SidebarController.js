@@ -13,7 +13,7 @@
                 "title": "Couchtuner Companion " + version,
                 "template": chrome.extension.getURL("html/sidebar.html"),
                 "placement": "left",
-                "animation": "am-fadeAndSlideLeft",
+                "animation": "am-fade-and-slide-left",
                 "show": false,
                 "scope": $scope
             });
