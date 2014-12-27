@@ -5,8 +5,12 @@
     app.controller('SidebarController', [
         '$scope', '$aside', '$compile', 'SettingsService', 'SyncService', 'BookmarkScanService', 'HistoryScanService',
         function ($scope, $aside, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService) {
+            var manifest = chrome.runtime.getManifest();
+            var isDevMode = (manifest.update_url == null);
+            var version = manifest.version + (isDevMode ? " - (DEVELOPMENT)" : "");
+
             var sidebar = $aside({
-                "title": "Couchtuner Companion",
+                "title": "Couchtuner Companion " + version,
                 "template": chrome.extension.getURL("html/sidebar.html"),
                 "placement": "left",
                 "animation": "am-fadeAndSlideLeft",
@@ -39,7 +43,7 @@
 
             $scope.openSidebar = function () {
                 sidebar.show();
-                $(".aside").scroll(function(e){
+                $(".aside").scroll(function (e) {
                     $(this).scrollLeft(0);
                 });
             };

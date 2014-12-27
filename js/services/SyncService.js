@@ -69,6 +69,24 @@
             chrome.storage.sync.clear();
         }
 
+        //# TODO - Remove this duplicate code as it's already implemented in HistoryScan
+        function getNiceNumber(number) {
+            number = parseInt(number);
+            var niceNumber = (number >= 0 && number < 10) ? "0" + number : number;
+            return niceNumber;
+        }
+
+        //# TODO - Fix this hack
+        function getNiceName(string) {
+            var regex = /(http:\/\/)((.+)\/)+((.+)(s)(eason)?\-?(\d{1,2}))((.+)(e)(pisode)?\-?(\d{1,2}))/i;
+            var groups = regex.exec(string);
+            var showName = groups[5];
+            var season = getNiceNumber(groups[8]);
+            var episode = getNiceNumber(groups[13]);
+
+            return showName + " - S" + season + "E" + episode;
+        }
+
         return {
             initialize: function (callback) {
                 console.log("Initializing sync service...");
@@ -143,11 +161,14 @@
                 if (!data['settings'].historySync) {
                     return;
                 }
-                if (data.history[0] && data.history[0].name === historyItemObject.name) {
+                if (data.history[0] && getNiceName(data.history[0].url) === getNiceName(historyItemObject.url)) {
                     data.history[0] = historyItemObject;
                 } else {
                     this.getHistory().push(historyItemObject);
                 }
+
+                var q = Enumerable.from(data["history"]);
+                data.history = q.orderBy("$.time").reverse().toArray();
                 sync('history');
             },
 
