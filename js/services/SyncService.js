@@ -5,7 +5,8 @@
             history: [],
             settings: {
                 bookmarkSync: false,
-                historySync: false
+                historySync: false,
+                useAnimations: true
             }
         };
 

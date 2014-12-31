@@ -8,12 +8,11 @@
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
             var version = manifest.version + (isDevMode ? " - (DEVELOPMENT)" : "");
-
             var sidebar = $aside({
                 "title": "Couchtuner Companion " + version,
                 "template": chrome.extension.getURL("html/sidebar.html"),
                 "placement": "left",
-                "animation": "am-fade-and-slide-left",
+                "animation": "none",
                 "show": false,
                 "scope": $scope
             });
@@ -34,6 +33,8 @@
                     //# enter an item into the history to be synced, and also represent previously
                     //# viewed shows in an easy to identify manner.
                     HistoryScanService.initialize();
+                    var useAnimations = SettingsService.settings.useAnimations;
+                    sidebar.$options.animation = (useAnimations) ? "am-fade-and-slide-left" : "none";
                 });
             }();
 

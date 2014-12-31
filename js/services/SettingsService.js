@@ -8,7 +8,8 @@
             var serviceObject = {
                 settings: {
                     bookmarkSync: false,
-                    historySync: false
+                    historySync: false,
+                    useAnimations: true
                 },
                 initialize: function () {
                     this.settings = SyncService.getSettings(this.settings);
