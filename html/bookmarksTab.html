@@ -14,7 +14,7 @@
         </div>
 
         <div>
-            Next: {{item.bannerString}}
+            {{item.dateCompare < 0 ? 'Last' :'Next'}}: <span class="text-{{item.dateCompare < 0 ? 'danger' :'success'}}">{{item.bannerString | date}}</span>
         </div>
     </div>
 </div>
