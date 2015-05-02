@@ -22,7 +22,11 @@
             </ul>
         </div>
     </div>
+    <input type="checkbox" class="checkbox checkbox-inline btn-primary" ng-model="settings.useAnimations"/>
+    Use animations
+
     <br ng-show="haveSettingsChanged"/>
+
     <div ng-show="haveSettingsChanged" class="alert alert-success">
         Settings updated.<br/>
         Please refresh the window when you're done in here.
