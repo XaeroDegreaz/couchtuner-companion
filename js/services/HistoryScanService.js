@@ -19,7 +19,7 @@
                 var a = $(event.target);
                 var link = a.attr('href');
                 var name = a.html();
-                SyncService.addHistoryItem(new HistoryItem(link, getNiceName(name)));
+                SyncService.addHistoryItem(new HistoryItem(link, name));
                 //# Place this property inside the link instead of scope polluting
                 hasHistoryPropogated = true;
                 $(this).trigger('click');
