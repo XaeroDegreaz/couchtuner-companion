@@ -36,15 +36,38 @@
                 <input id="use-tvapi"
                        type="checkbox"
                        class="checkbox checkbox-inline"
-                       ng-model="settings.useTvApi"/> Use TV API
+                       ng-model="settings.useTvApi"/> Retrieve episode date information
             </label>
         </div>
         <div class="form-group" ng-show="settings.useTvApi">
-            <label for="api-key" class="control-label">API Key</label>
+            <label for="api-key" class="control-label">
+                TheMovieDB API Key
+                <span class="glyphicon glyphicon-question-sign btn" ng-click="infoToggle = !infoToggle"></span>
+            </label>
+            <alert type="info" ng-show="infoToggle">
+                <p>
+                    This will allow you to see the next,<br/>
+                    or last date an episode for your bookmarked TV<br/>
+                    show is due to air.
+                </p>
+
+                <p>
+                    You can get a FREE key from <a href="http://www.themoviedb.org">The Movie DB</a><br/>
+                    by signing up, and following the roadsigns<br/>
+                    to generate an API key, or read the FAQ <a href="https://www.themoviedb.org/faq/api">here</a>.
+                </p>
+
+                <p>
+                    Without this key, it is not possible to provide you<br/>
+                    with any episode date information. You may also use<br/>
+                    your friend's API key if they've gotten one.
+                </p>
+            </alert>
             <input id="api-key"
                    type="text"
                    class="input-sm form-control"
-                   ng-model="settings.tvApiKey">
+                   ng-model="settings.tvApiKey"
+                   placeholder="Enter key here">
         </div>
     </div>
 
