@@ -9,7 +9,9 @@
                 settings: {
                     bookmarkSync: false,
                     historySync: false,
-                    useAnimations: true
+                    useAnimations: true,
+                    useTvApi: false,
+                    tvApiKey: null
                 },
                 initialize: function () {
                     this.settings = SyncService.getSettings(this.settings);

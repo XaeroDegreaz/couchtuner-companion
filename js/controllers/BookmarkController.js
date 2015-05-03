@@ -3,9 +3,10 @@
  */
 (function () {
     app.controller('BookmarkController', [
-        '$scope', '$compile', 'SyncService', 'BookmarkScanService',
-        function ($scope, $compile, SyncService, BookmarkScanService) {
+        '$scope', '$compile', 'SyncService', 'BookmarkScanService', 'TvApiService',
+        function ($scope, $compile, SyncService, BookmarkScanService, TvApiService) {
             $scope.bookmarks = [];
+            $scope.dateCompare = null;
 
             var onInitialize = function () {
                 getSortedBookmarks();
