@@ -1,9 +1,9 @@
 <div ng-controller="BookmarkController">
-    <div ng-click="go(item.url)"
+    <div ng-controller="BookmarkItemController"
          ng-repeat="bookmark in bookmarks track by bookmark.url"
+         ng-click="go(bookmark.url)"
          class="btn-default"
-         style="cursor: pointer; margin: 1px;"
-         ng-controller="BookmarkItemController">
+         style="cursor: pointer; margin: 1px;">
         <div class="btn-group">
             <button class="btn btn-sm btn-danger"
                     ng-click="onBookmarkRemove($event, bookmark)">
@@ -13,7 +13,6 @@
                 {{bookmark.name}}
             </div>
         </div>
-
         <div>
             {{dateCompare < 0 ? 'Last' :'Next'}} Episode:
             <span class="text-{{(bannerString === null) ? 'warning' : ((dateCompare < 0) ? 'danger' :'success')}}">
