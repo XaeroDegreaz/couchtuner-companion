@@ -37,15 +37,19 @@
                 "js/lib/angular-strap.min.js",
                 "js/lib/angular-strap.tpl.min.js",
                 "js/lib/linq.js",
+                "js/lib/themoviedb.min.js",
+                "js/lib/moment.js",
                 "js/app.js",
                 "js/services/SyncService.js",
                 "js/services/SettingsService.js",
                 "js/services/LinkService.js",
                 "js/services/BookmarkScanService.js",
                 "js/services/HistoryScanService.js",
+                "js/services/TvApiService.js",
                 "js/controllers/SidebarController.js",
                 "js/controllers/SettingsController.js",
                 "js/controllers/BookmarkController.js",
+                "js/controllers/BookmarkItemController.js",
                 "js/controllers/HistoryController.js"
             ]
         }

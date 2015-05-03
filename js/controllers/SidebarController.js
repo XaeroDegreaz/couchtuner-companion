@@ -3,8 +3,8 @@
  */
 (function () {
     app.controller('SidebarController', [
-        '$scope', '$aside', '$compile', 'SettingsService', 'SyncService', 'BookmarkScanService', 'HistoryScanService',
-        function ($scope, $aside, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService) {
+        '$scope', '$aside', '$compile', 'SettingsService', 'SyncService', 'BookmarkScanService', 'HistoryScanService', 'TvApiService',
+        function ($scope, $aside, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService, TvApiService) {
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
             var version = manifest.version + (isDevMode ? " - (DEVELOPMENT)" : "");
@@ -35,6 +35,7 @@
                     HistoryScanService.initialize();
                     var useAnimations = SettingsService.settings.useAnimations;
                     sidebar.$options.animation = (useAnimations) ? "am-fade-and-slide-left" : "none";
+                    TvApiService.initialize();
                 });
             }();
 
