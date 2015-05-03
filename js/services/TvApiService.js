@@ -5,7 +5,7 @@
     app.service('TvApiService', [
         'SettingsService',
         function (SettingsService) {
-
+            var errorMessage = 'Unavailable.';
             var serviceObject = {
                 isEnabled: function () {
                     return SettingsService.settings.useTvApi && SettingsService.settings.tvApiKey != null;
@@ -21,6 +21,10 @@
                         function (data) {
                             var searchResponse = JSON.parse(data);
                             //console.log(searchResponse);
+                            if(searchResponse.results.length === 0){
+                                callback(errorMessage);
+                                return;
+                            }
                             var showResult = searchResponse.results[0];
                             theMovieDb.tv.getById({id: showResult.id},
                                 function (data) {
@@ -28,6 +32,10 @@
                                     //console.log(show);
                                     var query = Enumerable.from(show.seasons);
                                     var eligibleSeasons = query.where('$.air_date != null').toArray();
+                                    if(eligibleSeasons.length === 0){
+                                        callback(errorMessage);
+                                        return;
+                                    }
                                     var latestSeasonResult = eligibleSeasons[eligibleSeasons.length - 1];
                                     theMovieDb.tvSeasons.getById({
                                             id: show.id,
@@ -51,7 +59,11 @@
                                                     return e.air_date != null;
                                                 });
                                             }
-                                            callback(latestEpisode.air_date);
+                                            if(latestEpisode === null) {
+                                                callback(errorMessage);
+                                            }else {
+                                                callback(latestEpisode.air_date);
+                                            }
                                         },
                                         function (data) {
                                             console.log(data);
