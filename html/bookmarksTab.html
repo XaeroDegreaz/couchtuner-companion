@@ -1,15 +1,38 @@
+<style>
+    .ctrl {
+        background-color: #7e7e7e;
+        font-weight: bold;
+        color: #000;
+    }
+    .ctrl:hover{
+        background-color: #000;
+        color: #7e7e7e;
+    }
+</style>
 <div ng-controller="BookmarkController">
     <div ng-controller="BookmarkItemController"
          ng-repeat="bookmark in bookmarks track by bookmark.url"
          ng-click="go(bookmark.url)"
-         class="btn-default"
+         ng-init="onInitialize()"
          style="cursor: pointer; margin: 1px;">
-        <div class="btn-group">
+        <!--<div class="input-group-btn">
             <button class="btn btn-sm btn-danger"
                     ng-click="onBookmarkRemove($event, bookmark)">
                 -
             </button>
-            <div class="simplenavstuff">
+            <div class="form-control">
+                {{bookmark.name}}
+            </div>
+        </div>-->
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-sm btn-danger"
+                        ng-click="onBookmarkRemove($event, bookmark)">
+                    -
+                </button>
+            </span>
+
+            <div class="form-control input-sm ctrl">
                 {{bookmark.name}}
             </div>
         </div>
@@ -20,4 +43,5 @@
         </span>
         </div>
     </div>
+
 </div>
