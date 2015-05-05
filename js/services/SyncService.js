@@ -132,6 +132,9 @@
                 return data;
             },
 
+            bookmarkListener: function(){
+                console.log('Not initialized.');
+            },
             removeBookmark: function (bookmarkIndex) {
                 //# We null here instead of splice so that bookmark buttons will not colide
                 //# due to the potential of assigning a duplicate bookmarkIndex on the click event.
@@ -140,12 +143,14 @@
                 //# since we don't need any multiple-page-load-persistent keys.
                 data['bookmarks'][bookmarkIndex] = null;
                 sync('bookmarks');
+                this.bookmarkListener();
                 return data['bookmarks'];
             },
 
             addBookmark: function (bookmarkObject) {
                 data['bookmarks'].push(bookmarkObject);
                 sync('bookmarks');
+                this.bookmarkListener();
                 return data['bookmarks'];
             },
 
