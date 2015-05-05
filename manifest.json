@@ -26,6 +26,7 @@
                 "css/bootstrap.min.css",
                 "css/angular-motion.min.css",
                 "css/bootstrap-additions.min.css",
+                "css/angular-snap.css",
                 "css/fixbootstrap.css"
             ],
             "js": [
@@ -36,6 +37,8 @@
                 "js/lib/ui-bootstrap-tpls-0.11.2.js",
                 "js/lib/angular-strap.min.js",
                 "js/lib/angular-strap.tpl.min.js",
+                "js/lib/snap.js",
+                "js/lib/angular-snap.js",
                 "js/lib/linq.js",
                 "js/lib/themoviedb.min.js",
                 "js/lib/moment.js",
