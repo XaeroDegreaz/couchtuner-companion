@@ -49,9 +49,10 @@
         </div>
         <div style="text-align: center;">
             <pagination total-items="searchBookmarks != null ? searchBookmarks.length : bookmarks.length"
+                        items-per-page="itemsPerPage"
                         ng-model="currentPage"
                         ng-change="pageChanged()"
-                        max-size="numPages"
+                        max-pages="maxPages"
                         class="pagination-sm"
                         style="margin: auto;"></pagination>
         </div>

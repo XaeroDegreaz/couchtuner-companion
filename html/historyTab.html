@@ -17,7 +17,16 @@
         History tracking is not enabled. <br/>
         You can turn it on from the settings tab.
     </div>
-    <div ng-repeat="item in history track by item.time"
+    <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+        <input placeholder="Search History..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
+        <span class="input-group-btn">
+            <button class="btn btn-sm btn-danger"
+                    ng-click="searchText = null; pageChanged();">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </span>
+    </div>
+    <div ng-repeat="item in visibleHistory track by item.time"
          ng-click="go(item.url)"
          style="cursor: pointer; margin: 1px;">
         <div>
@@ -32,5 +41,14 @@
             </span>
             <div class="form-control input-sm ctrl">{{getNiceName(item.name)}}</div>
         </div>
+    </div>
+    <div style="text-align: center;">
+        <pagination total-items="searchHistory != null ? searchHistory.length : history.length"
+                    items-per-page="itemsPerPage"
+                    ng-model="currentPage"
+                    ng-change="pageChanged()"
+                    max-size="maxSize"
+                    class="pagination-sm"
+                    style="margin: auto;"></pagination>
     </div>
 </div>

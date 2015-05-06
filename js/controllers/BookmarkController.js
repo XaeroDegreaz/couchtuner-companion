@@ -9,8 +9,8 @@
 			$scope.bookmarks = [];
 			$scope.dateCompare = null;
 			$scope.currentPage = 1;
-			$scope.itemsPerPage = 10;
-            $scope.numPages = 4;
+			$scope.itemsPerPage = 14;
+            $scope.maxPages = 4;
 			$scope.visibleBookmarks = [];
             $scope.searchText = null;
             $scope.searchBookmarks = null;
