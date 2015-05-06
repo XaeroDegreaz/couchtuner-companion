@@ -5,36 +5,55 @@
         color: #000;
         border: 1px solid #7e7e7e;
     }
-    .ctrl:hover{
+
+    .ctrl:hover {
         background-color: #000;
         color: #7e7e7e;
         border: 1px solid white;
     }
 </style>
 <div ng-controller="BookmarkController" class="tab-pane">
-    <div ng-controller="BookmarkItemController"
-         ng-repeat="bookmark in bookmarks track by bookmark.url"
-         ng-click="go(bookmark.url)"
-         ng-init="onInitialize()"
-         style="cursor: pointer;
-         margin: 1px;">
-        <div class="input-group">
-            <span class="input-group-btn">
-                <button class="btn btn-sm btn-danger"
-                        ng-click="onBookmarkRemove($event, bookmark)">
-                    -
-                </button>
-            </span>
-            <div class="form-control input-sm ctrl" snap-toggle>
-                {{bookmark.name}}
+    <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+        <span class="input-group-btn">
+            <button class="btn btn-sm btn-danger"
+                    ng-click="searchText = null; pageChanged();">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </span>
+        <input placeholder="Search Bookmarks..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
+    </div>
+    <div style="height: 100%">
+        <div ng-controller="BookmarkItemController"
+             ng-repeat="bookmark in visibleBookmarks track by bookmark.url"
+             ng-click="go(bookmark.url)"
+             ng-init="onInitialize()"
+             style="cursor: pointer; margin: 1px;">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-sm btn-danger"
+                            ng-click="onBookmarkRemove($event, bookmark)">
+                        -
+                    </button>
+                </span>
+
+                <div class="form-control input-sm ctrl" snap-toggle>
+                    {{bookmark.name}}
+                </div>
+            </div>
+            <div>
+                {{dateCompare < 0 ? 'Last' :'Next'}} Episode:
+                <span class="text-{{(bannerString === null) ? 'warning' : ((dateCompare < 0) ? 'danger' :'success')}}">
+                    {{(bannerString === null) ? 'Disabled in settings' : bannerString | date}}
+                </span>
             </div>
         </div>
-        <div>
-            {{dateCompare < 0 ? 'Last' :'Next'}} Episode:
-            <span class="text-{{(bannerString === null) ? 'warning' : ((dateCompare < 0) ? 'danger' :'success')}}">
-            {{(bannerString === null) ? 'Disabled in settings' : bannerString | date}}
-            </span>
+        <div style="text-align: center;">
+            <pagination total-items="searchBookmarks != null ? searchBookmarks.length : bookmarks.length"
+                        ng-model="currentPage"
+                        ng-change="pageChanged()"
+                        max-size="numPages"
+                        class="pagination-sm"
+                        style="margin: auto;"></pagination>
         </div>
     </div>
-
 </div>

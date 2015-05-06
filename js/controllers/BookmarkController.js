@@ -8,10 +8,28 @@
 			$scope.watchedBookmarks = SyncService.watchBookmarks;
 			$scope.bookmarks = [];
 			$scope.dateCompare = null;
+			$scope.currentPage = 1;
+			$scope.itemsPerPage = 10;
+            $scope.numPages = 4;
+			$scope.visibleBookmarks = [];
+            $scope.searchText = null;
+            $scope.searchBookmarks = null;
 
 			SyncService.bookmarkListener = function () {
 				var query = Enumerable.from(SyncService.getBookmarks());
 				$scope.bookmarks = query.where("$ !== null").orderBy("$.name").toArray();
+                $scope.searchBookmarks = null;
+                if($scope.searchText){
+                    $scope.searchBookmarks = Enumerable.from($scope.bookmarks ).where(function(x){
+                        return x.name.toLowerCase().indexOf($scope.searchText.toLowerCase()) > -1;
+                    } ).toArray();
+                }
+                var targetArray = $scope.searchBookmarks !== null ? $scope.searchBookmarks : $scope.bookmarks;
+				$scope.visibleBookmarks = targetArray.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
+			};
+
+			$scope.pageChanged = function(){
+                SyncService.bookmarkListener();
 			};
 
 			$scope.onBookmarkRemove = function ($event, bookmark) {
