@@ -14,13 +14,13 @@
 </style>
 <div ng-controller="BookmarkController" class="tab-pane">
     <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+        <input placeholder="Search Bookmarks..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
         <span class="input-group-btn">
             <button class="btn btn-sm btn-danger"
                     ng-click="searchText = null; pageChanged();">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
         </span>
-        <input placeholder="Search Bookmarks..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
     </div>
     <div style="height: 100%">
         <div ng-controller="BookmarkItemController"

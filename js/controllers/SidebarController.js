@@ -7,16 +7,7 @@
         function ($scope, $aside, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService, TvApiService) {
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
-            var version = manifest.version + (isDevMode ? " - (DEVELOPMENT)" : "");
-            var sidebar = $aside({
-                "title": "Couchtuner Companion " + version,
-                "template": chrome.extension.getURL("html/sidebar.html"),
-                "placement": "left",
-                "animation": "none",
-                "show": false,
-                "scope": $scope
-            });
-
+            $scope.version = manifest.version + (isDevMode ? " - (D)" : "");
             $scope.tabs = {
                 settingsTab: chrome.extension.getURL("html/settingsTab.html"),
                 bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
@@ -33,8 +24,6 @@
                     //# enter an item into the history to be synced, and also represent previously
                     //# viewed shows in an easy to identify manner.
                     HistoryScanService.initialize();
-                    var useAnimations = SettingsService.settings.useAnimations;
-                    sidebar.$options.animation = (useAnimations) ? "am-fade-and-slide-left" : "none";
                     TvApiService.initialize();
                 });
             }();
