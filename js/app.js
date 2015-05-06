@@ -8,7 +8,7 @@ htmlRoot.attr("ng-controller", "SidebarController");
 
 var snapDrawer = $("<snap-drawer ng-include=\"'" + chrome.extension.getURL("html/sidebar.html") + "'\"/>");
 var sidebarButton = $("<div ng-include=\"'" + chrome.extension.getURL("html/sidebarButton.html") + "'\"/>");
-var snapContent = $('<snap-content style="background-color: #1B1B1B"></snap-content>');
+var snapContent = $('<snap-content snap-opt-touch-to-drag="false" style="background-color: #1B1B1B; box-shadow: 0 0 10px #aaa;"></snap-content>');
 var page = $("#page");
 body.prepend(snapContent);
 snapContent.prepend(page);
