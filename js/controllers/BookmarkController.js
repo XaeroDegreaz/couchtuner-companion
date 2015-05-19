@@ -9,13 +9,13 @@
 			$scope.bookmarks = [];
 			$scope.dateCompare = null;
 			$scope.currentPage = 1;
-			$scope.itemsPerPage = 14;
+			$scope.itemsPerPage = 50;
             $scope.maxPages = 4;
 			$scope.visibleBookmarks = [];
             $scope.searchText = null;
             $scope.searchBookmarks = null;
-
 			SyncService.bookmarkListener = function () {
+				resizeContent();
 				var query = Enumerable.from(SyncService.getBookmarks());
 				$scope.bookmarks = query.where("$ !== null").orderBy("$.name").toArray();
                 $scope.searchBookmarks = null;
@@ -40,6 +40,14 @@
 				//# to this bookmark, and have their button reflect its new status
 				BookmarkScanService.unbookmark(bookmarkIndex);
 			};
+
+			function resizeContent(){
+				var searchBox = $('#searchBox' );
+				var tabContent = $('#tabContent' );
+				var searchBoxOffset = searchBox.offset();
+				var leftover = $(window ).height() - (searchBoxOffset.top + searchBox.outerHeight(true));
+				tabContent.height(leftover);
+			}
 		}
 	]);
 })();

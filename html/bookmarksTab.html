@@ -13,7 +13,7 @@
     }
 </style>
 <div ng-controller="BookmarkController" class="tab-pane">
-    <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+    <div id="searchBox" class="input-group input-group-sm" style="margin-bottom: 10px;">
         <input placeholder="Search Bookmarks..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
         <span class="input-group-btn">
             <button class="btn btn-sm btn-danger"
@@ -22,7 +22,7 @@
             </button>
         </span>
     </div>
-    <div style="height: 100%">
+    <div id="tabContent" style="height:100%; overflow-y: auto;">
         <div ng-controller="BookmarkItemController"
              ng-repeat="bookmark in visibleBookmarks track by bookmark.url"
              ng-click="go(bookmark.url)"
