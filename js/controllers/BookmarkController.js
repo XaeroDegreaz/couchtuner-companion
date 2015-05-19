@@ -38,12 +38,14 @@
 			};
 
 			function resizeContent(){
-				var searchBox = $('#searchBox');
-				var tabContent = $('#tabContent');
-				var searchBoxOffset = searchBox.offset();
-				var leftover = $(window ).height() - (searchBoxOffset.top + searchBox.outerHeight(true));
-                SidebarService.tabContentHeight = leftover;
-				tabContent.height(leftover);
+                if(!SidebarService.tabContentHeight) {
+                    var searchBox = $( '#searchBox' );
+                    var tabContent = $( '#tabContent' );
+                    var searchBoxOffset = searchBox.offset();
+                    var leftover = $( window ).height() - (searchBoxOffset.top + searchBox.outerHeight( true ));
+                    SidebarService.tabContentHeight = leftover;
+                    tabContent.height( leftover );
+                }
 			}
 
             resizeContent();

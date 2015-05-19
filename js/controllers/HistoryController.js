@@ -8,13 +8,10 @@
             var syncService = SyncService;
             $scope.history = syncService.getHistory();
             $scope.settings = SettingsService.settings;
-            //# Filtering
-            $scope.currentPage = 1;
-            $scope.itemsPerPage = 500;
-            $scope.maxPages = 4;
             $scope.visibleHistory = $scope.history;
             $scope.searchText = null;
             $scope.searchHistory = null;
+            $scope.sidebarService = SidebarService;
 
             $scope.removeHistoryItem = function ($event, item) {
                 SyncService.removeHistoryItem(item);
@@ -27,7 +24,6 @@
             };
 
             $scope.pageChanged = function(){
-                resizeContent();
                 $scope.searchHistory = null;
                 if($scope.searchText){
                     $scope.searchHistory = Enumerable.from($scope.history ).where(function(x){
@@ -35,16 +31,11 @@
                     } ).toArray();
                 }
                 var targetArray = $scope.searchHistory !== null ? $scope.searchHistory : $scope.history;
-                $scope.visibleHistory = targetArray.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
+                $scope.visibleHistory = targetArray;
             };
 
             var init = function(){
                 $scope.pageChanged();
             }();
-
-            function resizeContent(){
-                var tabContent = $('#tabContent2');
-                tabContent.height(SidebarService.tabContentHeight);
-            }
         }]);
 })();

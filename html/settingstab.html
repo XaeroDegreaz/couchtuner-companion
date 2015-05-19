@@ -1,36 +1,24 @@
-<div ng-controller="SettingsController">
-    <div class="btn-default" style="margin-bottom: 1px;">
-        <div dropdown class="btn-group-vertical">
-            <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> History Tracking => ({{settings.historySync||'Off'}})
-            </div>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#" ng-click="settings.historySync = false">Off</a></li>
-                <li><a href="#" ng-click="settings.historySync = 'Local'">Save locally</a></li>
-                <li><a href="#" ng-click="settings.historySync = 'Sync'">Save with Chrome Sync</a></li>
-            </ul>
-        </div>
+<div style="{{'height:'+sidebarService.tabContentHeight+'px;overflow-y:auto;overflow-x:hidden;'}}" ng-controller="SettingsController">
+    <div class="btn-group" style="width: 100%; margin: 1px;" dropdown dropdown-append-to-body>
+        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="width: 100%;" dropdown-toggle>
+            History Tracking [{{settings.historySync||'Off'}}] <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="settings.historySync = false">Off</a></li>
+            <li><a href="#" ng-click="settings.historySync = 'Local'">Save locally</a></li>
+            <li><a href="#" ng-click="settings.historySync = 'Sync'">Save with Chrome Sync</a></li>
+        </ul>
     </div>
-    <div class="btn-default" style="margin-bottom: 1px;">
-        <div dropdown class="btn-group-vertical">
-            <div type="button" class="btn-sm dropdown-toggle" ng-disabled="disabled">
-                <span class="caret"></span> Bookmark Storage => ({{settings.bookmarkSync?'Sync':'Local'}})
-            </div>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#" ng-click="settings.bookmarkSync = false">Save locally</a></li>
-                <li><a href="#" ng-click="settings.bookmarkSync = true">Save with Chrome Sync</a></li>
-            </ul>
-        </div>
+    <div class="btn-group" style="width: 100%; margin: 1px;" dropdown dropdown-append-to-body>
+        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="width: 100%;" dropdown-toggle>
+            Bookmark Storage [{{settings.bookmarkSync?'Sync':'Local'}}] <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="settings.bookmarkSync = false">Save locally</a></li>
+            <li><a href="#" ng-click="settings.bookmarkSync = true">Save with Chrome Sync</a></li>
+        </ul>
     </div>
     <div style="margin: 1px;">
-        <div class="form-group">
-            <label for="use-animations" class="control-label">
-                <input id="use-animations"
-                       type="checkbox"
-                       class="checkbox checkbox-inline"
-                       ng-model="settings.useAnimations"/> Use animations
-            </label>
-        </div>
         <div class="form-group">
             <label for="use-tvapi" class="control-label">
                 <input id="use-tvapi"

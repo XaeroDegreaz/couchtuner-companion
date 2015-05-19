@@ -13,6 +13,10 @@
     }
 </style>
 <div ng-controller="HistoryController" class="tab-pane">
+    <div ng-show="settings.historySync === false" class="alert alert-danger">
+        History tracking is not enabled. <br/>
+        You can turn it on from the settings tab.
+    </div>
     <div id="searchBox2" class="input-group input-group-sm" style="margin-bottom: 10px;">
         <input placeholder="Search History..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
         <span class="input-group-btn">
@@ -22,7 +26,7 @@
             </button>
         </span>
     </div>
-    <div id="tabContent2" style="height: 100%; overflow-y: auto;">
+    <div style="{{'height:'+sidebarService.tabContentHeight+'px;overflow-y:auto;'}}">
         <div ng-repeat="item in visibleHistory track by item.time"
              ng-click="go(item.url)"
              style="cursor: pointer; margin: 1px;">

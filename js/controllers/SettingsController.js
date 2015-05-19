@@ -3,11 +3,12 @@
  */
 (function () {
     app.controller("SettingsController", [
-        '$scope', 'SettingsService',
-        function ($scope, SettingsService) {
+        '$scope', 'SettingsService', 'SidebarService',
+        function ($scope, SettingsService, SidebarService) {
             $scope.settings = SettingsService.settings;
             $scope.settingsService = SettingsService;
             $scope.haveSettingsChanged = false;
+            $scope.sidebarService = SidebarService;
 
             $scope.$watchCollection('settings', function (oldValue, newValue) {
                 if (oldValue === newValue) {

@@ -9,7 +9,6 @@
                 settings: {
                     bookmarkSync: false,
                     historySync: false,
-                    useAnimations: true,
                     useTvApi: false,
                     tvApiKey: null
                 },
