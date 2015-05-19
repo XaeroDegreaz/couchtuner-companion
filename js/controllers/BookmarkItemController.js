@@ -9,14 +9,14 @@
             $scope.bannerString = TvApiService.isEnabled() ? 'Loading...' : null;
             var bookmark = $scope.bookmark;
 
-            var onInitialize = function () {
+            $scope.onInitialize = function () {
                 TvApiService.findNextEpisodeDate(bookmark.name, function (date) {
                     $scope.$apply(function () {
                         $scope.bannerString = date;
                         $scope.dateCompare = getDateCompareInt(date);
                     });
                 });
-            }();
+            };
 
             function getDateCompareInt(date) {
                 var today = new Date();

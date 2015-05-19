@@ -1,5 +1,5 @@
 /* Without this, Bootstrap.css interferes with the layout of Couchtuner*/
-* {
+ #page * {
     box-sizing: content-box;
 }
 
@@ -30,7 +30,7 @@
     border-color: #2b669a;
 }*/
 
-.simplenavstuff {
+/*.simplenavstuff {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -44,7 +44,7 @@
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px;
-}
+}*/
 
 @font-face {
     font-family: 'Glyphicons Halflings';

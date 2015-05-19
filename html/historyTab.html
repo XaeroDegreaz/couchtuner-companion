@@ -1,22 +1,49 @@
-<div ng-controller="HistoryController">
+<style>
+    .ctrl {
+        background-color: #7e7e7e;
+        font-weight: bold;
+        color: #000;
+        border: 1px solid #7e7e7e;
+    }
+
+    .ctrl:hover {
+        background-color: #000;
+        color: #7e7e7e;
+        border: 1px solid white;
+    }
+</style>
+<div ng-controller="HistoryController" class="tab-pane">
     <div ng-show="settings.historySync === false" class="alert alert-danger">
         History tracking is not enabled. <br/>
         You can turn it on from the settings tab.
     </div>
-    <div ng-repeat="item in history track by item.time"
-         class="btn-default"
-         ng-click="go(item.url)"
-         style="cursor: pointer; margin: 1px;">
-        <div class="btn-group">
+    <div id="searchBox2" class="input-group input-group-sm" style="margin-bottom: 10px;">
+        <input placeholder="Search History..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
+        <span class="input-group-btn">
             <button class="btn btn-sm btn-danger"
-                    ng-click="removeHistoryItem($event, item)">
-                -
+                    ng-click="searchText = null; pageChanged();">
+                <span class="glyphicon glyphicon-remove"></span>
             </button>
+        </span>
+    </div>
+    <div style="{{'height:'+sidebarService.tabContentHeight+'px;overflow-y:auto;'}}">
+        <div ng-repeat="item in visibleHistory track by item.time"
+             ng-click="go(item.url)"
+             style="cursor: pointer; margin: 1px;">
+            <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-sm btn-danger"
+                        ng-click="removeHistoryItem($event, item)">
+                    -
+                </button>
+            </span>
 
-            <div class="simplenavstuff">{{item.time | date:'mediumDate'}} -
-                {{getNiceName(item.name)}}
+                <div class="form-control input-sm ctrl">{{getNiceName(item.name)}}</div>
             </div>
 
+            <div>
+                {{item.time | date:'mediumDate'}}
+            </div>
         </div>
     </div>
 </div>
