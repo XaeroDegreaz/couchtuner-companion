@@ -5,12 +5,8 @@
 	app.controller('BookmarkController', [
 		'$scope', '$compile', 'SyncService', 'BookmarkScanService', 'SidebarService',
 		function ($scope, $compile, SyncService, BookmarkScanService, SidebarService) {
-			$scope.watchedBookmarks = SyncService.watchBookmarks;
 			$scope.bookmarks = [];
 			$scope.dateCompare = null;
-			$scope.currentPage = 1;
-			$scope.itemsPerPage = 50;
-            $scope.maxPages = 4;
 			$scope.visibleBookmarks = [];
             $scope.searchText = null;
             $scope.searchBookmarks = null;
@@ -25,7 +21,7 @@
                     } ).toArray();
                 }
                 var targetArray = $scope.searchBookmarks !== null ? $scope.searchBookmarks : $scope.bookmarks;
-				$scope.visibleBookmarks = targetArray.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
+				$scope.visibleBookmarks = targetArray;
 			};
 
 			$scope.pageChanged = function(){
