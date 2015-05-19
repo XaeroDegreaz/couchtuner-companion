@@ -3,8 +3,8 @@
  */
 (function () {
 	app.controller('BookmarkController', [
-		'$scope', '$compile', 'SyncService', 'BookmarkScanService', 'TvApiService',
-		function ($scope, $compile, SyncService, BookmarkScanService, TvApiService) {
+		'$scope', '$compile', 'SyncService', 'BookmarkScanService', 'SidebarService',
+		function ($scope, $compile, SyncService, BookmarkScanService, SidebarService) {
 			$scope.watchedBookmarks = SyncService.watchBookmarks;
 			$scope.bookmarks = [];
 			$scope.dateCompare = null;
@@ -42,12 +42,15 @@
 			};
 
 			function resizeContent(){
-				var searchBox = $('#searchBox' );
-				var tabContent = $('#tabContent' );
+				var searchBox = $('#searchBox');
+				var tabContent = $('#tabContent');
 				var searchBoxOffset = searchBox.offset();
 				var leftover = $(window ).height() - (searchBoxOffset.top + searchBox.outerHeight(true));
+                SidebarService.tabContentHeight = leftover;
 				tabContent.height(leftover);
 			}
+
+            resizeContent();
 		}
 	]);
 })();

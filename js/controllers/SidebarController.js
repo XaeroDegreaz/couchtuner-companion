@@ -13,6 +13,7 @@
                 bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
                 historyTab: chrome.extension.getURL("html/historyTab.html")
             };
+            $scope.tabContentHeight = 0;
 
             var onInitialize = function () {
                 //# Tell sync service to do whatever it needs to do to retrieve information from Chrome storage.

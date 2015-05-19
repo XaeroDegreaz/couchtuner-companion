@@ -12,12 +12,8 @@
         border: 1px solid white;
     }
 </style>
-<div ng-controller="HistoryController">
-    <div ng-show="settings.historySync === false" class="alert alert-danger">
-        History tracking is not enabled. <br/>
-        You can turn it on from the settings tab.
-    </div>
-    <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+<div ng-controller="HistoryController" class="tab-pane">
+    <div id="searchBox2" class="input-group input-group-sm" style="margin-bottom: 10px;">
         <input placeholder="Search History..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
         <span class="input-group-btn">
             <button class="btn btn-sm btn-danger"
@@ -26,29 +22,24 @@
             </button>
         </span>
     </div>
-    <div ng-repeat="item in visibleHistory track by item.time"
-         ng-click="go(item.url)"
-         style="cursor: pointer; margin: 1px;">
-        <div>
-            {{item.time | date:'mediumDate'}}
-        </div>
-        <div class="input-group">
+    <div id="tabContent2" style="height: 100%; overflow-y: auto;">
+        <div ng-repeat="item in visibleHistory track by item.time"
+             ng-click="go(item.url)"
+             style="cursor: pointer; margin: 1px;">
+            <div class="input-group">
             <span class="input-group-btn">
                 <button class="btn btn-sm btn-danger"
                         ng-click="removeHistoryItem($event, item)">
                     -
                 </button>
             </span>
-            <div class="form-control input-sm ctrl">{{getNiceName(item.name)}}</div>
+
+                <div class="form-control input-sm ctrl">{{getNiceName(item.name)}}</div>
+            </div>
+
+            <div>
+                {{item.time | date:'mediumDate'}}
+            </div>
         </div>
-    </div>
-    <div style="text-align: center;">
-        <pagination total-items="searchHistory != null ? searchHistory.length : history.length"
-                    items-per-page="itemsPerPage"
-                    ng-model="currentPage"
-                    ng-change="pageChanged()"
-                    max-size="maxSize"
-                    class="pagination-sm"
-                    style="margin: auto;"></pagination>
     </div>
 </div>

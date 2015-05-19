@@ -3,14 +3,14 @@
  */
 (function () {
     app.controller('HistoryController', [
-        '$scope', 'SyncService', 'SettingsService', 'HistoryScanService',
-        function ($scope, SyncService, SettingsService, HistoryScanService) {
+        '$scope', 'SyncService', 'SettingsService', 'HistoryScanService', 'SidebarService',
+        function ($scope, SyncService, SettingsService, HistoryScanService, SidebarService) {
             var syncService = SyncService;
             $scope.history = syncService.getHistory();
             $scope.settings = SettingsService.settings;
             //# Filtering
             $scope.currentPage = 1;
-            $scope.itemsPerPage = 14;
+            $scope.itemsPerPage = 500;
             $scope.maxPages = 4;
             $scope.visibleHistory = $scope.history;
             $scope.searchText = null;
@@ -27,6 +27,7 @@
             };
 
             $scope.pageChanged = function(){
+                resizeContent();
                 $scope.searchHistory = null;
                 if($scope.searchText){
                     $scope.searchHistory = Enumerable.from($scope.history ).where(function(x){
@@ -40,5 +41,10 @@
             var init = function(){
                 $scope.pageChanged();
             }();
+
+            function resizeContent(){
+                var tabContent = $('#tabContent2');
+                tabContent.height(SidebarService.tabContentHeight);
+            }
         }]);
 })();
