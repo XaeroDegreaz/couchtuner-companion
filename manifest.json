@@ -40,7 +40,7 @@
                 "js/lib/snap.js",
                 "js/lib/angular-snap.js",
                 "js/lib/linq.js",
-                "js/lib/themoviedb.min.js",
+                "js/lib/themoviedb.js",
                 "js/lib/moment.js",
                 "js/app.js",
                 "js/services/SyncService.js",
