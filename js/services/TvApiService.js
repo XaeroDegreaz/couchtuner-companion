@@ -15,13 +15,16 @@
             var errorMessage = 'Unavailable.';
 
             function sync() {
-                chrome.storage.local.set({'tvApiCache': tvApiCache});
+                chrome.storage.local.set({'tvApiCache': tvApiCache}, function () {
+                    console.log(chrome.runtime.lastError);
+                });
             }
 
             function findShowByName(showName, callback) {
-                var showResult = tvApiCache.shows[showName];
+                var query = Enumerable.from(tvApiCache.shows);
+                var showResult = query.where('$.name == "' + showName + '"').firstOrDefault();
                 if (showResult) {
-                    callback(showResult);
+                    callback(showResult.obj);
                 } else {
                     theMovieDb.search.getTv({query: showName}, function (data) {
                         var searchResponse = JSON.parse(data);
@@ -32,7 +35,7 @@
                             return;
                         }
                         var showResult = results[0];
-                        tvApiCache.shows[showName] = showResult;
+                        tvApiCache.shows.push({name: showName, obj: showResult});
                         sync();
                         callback(showResult);
                     }, function (data) {
@@ -45,12 +48,10 @@
             }
 
             function findLatestEpisodeByShowIdAndSeasonNumber(showId, seasonNumber, callback) {
-                var showSeasons = tvApiCache.seasons[showId];
-                if (showSeasons) {
-                    var seasonResult = showSeasons[seasonNumber];
-                    if (seasonResult) {
-                        getLatest(seasonResult);
-                    }
+                var query = Enumerable.from(tvApiCache.seasons);
+                var seasonResult = query.where('$.showId == ' + showId + ' && $.seasonNumber == ' + seasonNumber).firstOrDefault();
+                if (seasonResult) {
+                    getLatest(seasonResult.obj);
                 } else {
                     theMovieDb.tvSeasons.getById({
                             id: showId,
@@ -58,8 +59,7 @@
                         },
                         function (data) {
                             var seasonResult = JSON.parse(data);
-                            tvApiCache.seasons[showId] = [];
-                            tvApiCache.seasons[showId][seasonNumber] = seasonResult;
+                            tvApiCache.seasons.push({showId: showId, seasonNumber: seasonNumber, obj: seasonResult});
                             sync();
                             getLatest(seasonResult);
                         },
@@ -104,14 +104,13 @@
                 initialize: function () {
                     theMovieDb.common.api_key = SettingsService.settings.tvApiKey;
                     chrome.storage.local.get('tvApiCache', function (data) {
-                        tvApiCache = (!data.tvApiCache.shows) ? tvApiCache : data.tvApiCache;
+                        tvApiCache = (!data.tvApiCache) ? tvApiCache : data.tvApiCache;
                     });
                 },
                 findNextEpisodeDate: function (showName, callback) {
                     if (!this.isEnabled()) {
                         return;
                     }
-
                     findShowByName(showName, function (showResult) {
                         function findTvShowById(showId, callback) {
                             theMovieDb.tv.getById({id: showResult.id},
