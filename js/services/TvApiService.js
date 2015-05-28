@@ -101,6 +101,10 @@
             }
 
             function tryGetData(showId, callback) {
+                if(showId === errorMessage){
+                    callback(errorMessage);
+                    return;
+                }
                 //# Preemtively display last known good data while this calls out to check for new information.
                 //# Keeps 'Loading...' from displaying if we have at least SOME data.
                 var query = Enumerable.from(tvApiCache.seasons);
@@ -130,6 +134,10 @@
                         return;
                     }
                     findShowByName(showName, function (showResultId) {
+                        if(showResultId === errorMessage){
+                            callback(errorMessage);
+                            return;
+                        }
                         function findTvShowById(showId, callback) {
                             theMovieDb.tv.getById({id: showResultId},
                                 function (data) {
