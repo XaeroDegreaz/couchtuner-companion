@@ -24,7 +24,7 @@
                 var query = Enumerable.from(tvApiCache.shows);
                 var showResult = query.where('$.name == "' + showName + '"').firstOrDefault();
                 if (showResult) {
-                    callback(showResult.obj);
+                    callback(showResult.id);
                 } else {
                     theMovieDb.search.getTv({query: showName}, function (data) {
                         var searchResponse = JSON.parse(data);
@@ -35,9 +35,9 @@
                             return;
                         }
                         var showResult = results[0];
-                        tvApiCache.shows.push({name: showName, obj: showResult});
+                        tvApiCache.shows.push({name: showName, id: showResult.id});
                         sync();
-                        callback(showResult);
+                        callback(showResult.id);
                     }, function (data) {
                         console.error(data);
                         $timeout(function () {
@@ -51,7 +51,7 @@
                 var query = Enumerable.from(tvApiCache.seasons);
                 var seasonResult = query.where('$.showId == ' + showId + ' && $.seasonNumber == ' + seasonNumber).firstOrDefault();
                 if (seasonResult) {
-                    getLatest(seasonResult.obj);
+                    getLatest(seasonResult.obj, callback);
                 } else {
                     theMovieDb.tvSeasons.getById({
                             id: showId,
@@ -59,42 +59,60 @@
                         },
                         function (data) {
                             var seasonResult = JSON.parse(data);
-                            tvApiCache.seasons.push({showId: showId, seasonNumber: seasonNumber, obj: seasonResult});
+                            var query = Enumerable.from(seasonResult.episodes);
+                            var airDates = query.select('$.air_date').distinct().toArray();
+                            tvApiCache.seasons.push({showId: showId, seasonNumber: seasonNumber, obj: airDates});
                             sync();
-                            getLatest(seasonResult);
+                            getLatest(airDates, callback);
                         },
                         function (data) {
                             console.error(data);
+                            tryGetData(showId, callback);
                             $timeout(function () {
                                 findLatestEpisodeByShowIdAndSeasonNumber(showId, seasonNumber, callback);
                             }, 10000);
                         })
                 }
 
-                function getLatest(seasonResult) {
-                    //console.log(searchResponse, show, latestSeasonResult, season);
-                    var query = Enumerable.from(seasonResult.episodes);
-                    var today = moment().startOf('day');
-                    var latestEpisode = query.firstOrDefault(function (e) {
-                        if (e.air_date != null) {
-                            var airDate = moment(e.air_date).startOf('day');
-                            return airDate >= today;
-                        } else {
-                            return false;
-                        }
-                    });
-                    if (latestEpisode === null) {
-                        latestEpisode = query.lastOrDefault(function (e) {
-                            return e.air_date != null;
-                        });
-                    }
-                    if (latestEpisode === null) {
-                        callback(errorMessage);
+            }
+
+            function getLatest(airDates, callback) {
+                //console.log(searchResponse, show, latestSeasonResult, season);
+                var query = Enumerable.from(airDates);
+                var today = moment().startOf('day');
+                var latestEpisodeDate = query.firstOrDefault(function (d) {
+                    if (d != null) {
+                        var airDate = moment(d).startOf('day');
+                        return airDate >= today;
                     } else {
-                        callback(latestEpisode.air_date);
+                        return false;
+                    }
+                });
+                if (latestEpisodeDate === null) {
+                    latestEpisodeDate = query.lastOrDefault(function (d) {
+                        return d != null;
+                    });
+                }
+                if (latestEpisodeDate === null) {
+                    callback(errorMessage);
+                } else {
+                    callback(latestEpisodeDate);
+                }
+            }
+
+            function tryGetData(showId, callback) {
+                //# Preemtively display last known good data while this calls out to check for new information.
+                //# Keeps 'Loading...' from displaying if we have at least SOME data.
+                var query = Enumerable.from(tvApiCache.seasons);
+                var seasons = query.where('$.showId == ' + showId).toArray();
+                if (seasons.length > 0) {
+                    query = Enumerable.from(seasons);
+                    var seasonNumber = query.max('$.seasonNumber');
+                    var seasonResult = query.where('$.showId == ' + showId + ' && $.seasonNumber == ' + seasonNumber).firstOrDefault();
+                    if (seasonResult) {
+                        getLatest(seasonResult.obj, callback);
                     }
                 }
-
             }
 
             var serviceObject = {
@@ -111,9 +129,9 @@
                     if (!this.isEnabled()) {
                         return;
                     }
-                    findShowByName(showName, function (showResult) {
+                    findShowByName(showName, function (showResultId) {
                         function findTvShowById(showId, callback) {
-                            theMovieDb.tv.getById({id: showResult.id},
+                            theMovieDb.tv.getById({id: showResultId},
                                 function (data) {
                                     var show = JSON.parse(data);
                                     //console.log(show);
@@ -127,13 +145,14 @@
                                     findLatestEpisodeByShowIdAndSeasonNumber(show.id, latestSeasonResult.season_number, callback);
                                 }, function (data) {
                                     console.error(data);
+                                    tryGetData(showId, callback);
                                     $timeout(function () {
                                         findTvShowById(showId, callback);
                                     }, 10000);
                                 })
                         }
 
-                        findTvShowById(showResult.id, callback);
+                        findTvShowById(showResultId, callback);
                     });
                 }
             };
