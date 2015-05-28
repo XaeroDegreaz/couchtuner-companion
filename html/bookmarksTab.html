@@ -12,7 +12,7 @@
         border: 1px solid white;
     }
 </style>
-<div ng-controller="BookmarkController" class="tab-pane">
+<div ng-controller="BookmarkController" class="tab-pane" ng-init="pageChanged()">
     <div id="searchBox" class="input-group input-group-sm" style="margin-bottom: 10px;">
         <input placeholder="Search Bookmarks..." class="form-control input-sm" style="width: 100%;" ng-model="searchText" ng-change="currentPage = 1; pageChanged()"/>
         <span class="input-group-btn">

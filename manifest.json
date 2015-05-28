@@ -4,7 +4,7 @@
     "name": "Couchtuner Companion",
     "short_name": "Companion",
     "description": "This extension extends the functionality of Couchtuner by way of bookmarks, and history.",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "author": "XaeroDegreaz",
     "homepage_url": "https://github.com/XaeroDegreaz/couchtuner-companion",
     "icons": {
@@ -40,7 +40,7 @@
                 "js/lib/snap.js",
                 "js/lib/angular-snap.js",
                 "js/lib/linq.js",
-                "js/lib/themoviedb.js",
+                "js/lib/themoviedb.min.js",
                 "js/lib/moment.js",
                 "js/app.js",
                 "js/services/SyncService.js",
