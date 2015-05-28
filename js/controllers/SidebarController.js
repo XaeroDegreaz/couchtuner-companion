@@ -8,11 +8,6 @@
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
             $scope.version = manifest.version + (isDevMode ? " - (D)" : "");
-            $scope.tabs = {
-                settingsTab: chrome.extension.getURL("html/settingsTab.html"),
-                bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
-                historyTab: chrome.extension.getURL("html/historyTab.html")
-            };
             $scope.tabContentHeight = 0;
 
             var onInitialize = function () {
@@ -26,6 +21,12 @@
                     //# viewed shows in an easy to identify manner.
                     HistoryScanService.initialize();
                     TvApiService.initialize();
+
+                    $scope.tabs = {
+                        settingsTab: chrome.extension.getURL("html/settingsTab.html"),
+                        bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
+                        historyTab: chrome.extension.getURL("html/historyTab.html")
+                    };
                 });
             }();
 
