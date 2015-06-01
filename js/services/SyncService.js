@@ -80,13 +80,17 @@
 
         //# TODO - Fix this hack
         function getNiceName(string) {
-            var regex = /(http:\/\/)((.+)\/)+((.+)(s)(eason)?\-?(\d{1,2}))((.+)(e)(pisode)?\-?(\d{1,2}))/i;
-            var groups = regex.exec(string);
-            var showName = groups[5];
-            var season = getNiceNumber(groups[8]);
-            var episode = getNiceNumber(groups[13]);
+            try {
+                var regex = /(http:\/\/)((.+)\/)+((.+)(s)(eason)?\-?(\d{1,2}))((.*)(e)(pisode)?\-?(\d{1,2}))/i;
+                var groups = regex.exec(string);
+                var showName = groups[5];
+                var season = getNiceNumber(groups[8]);
+                var episode = getNiceNumber(groups[13]);
 
-            return showName + " - S" + season + "E" + episode;
+                return showName + " - S" + season + "E" + episode;
+            }catch(err){
+                console.log(err);
+            }
         }
 
         return {
