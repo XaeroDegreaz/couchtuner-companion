@@ -10,6 +10,14 @@
             $scope.haveSettingsChanged = false;
             $scope.sidebarService = SidebarService;
 
+            $scope.getMyjsonBookmarksUri = function () {
+                return SettingsService.getMyjsonBookmarksUri();
+            };
+
+            $scope.getMyjsonHistoryUri = function () {
+                return SettingsService.getMyjsonHistoryUri();
+            };
+
             $scope.$watchCollection('settings', function (oldValue, newValue) {
                 if (oldValue === newValue) {
                     return;

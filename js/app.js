@@ -5,7 +5,7 @@ var htmlRoot = $("html");
 htmlRoot.attr("ng-app", "CouchtunerCompanion");
 htmlRoot.attr("ng-controller", "SidebarController");
 
-var app = angular.module("CouchtunerCompanion", ['ui.bootstrap', 'ngAnimate', 'mgcrea.ngStrap', 'snap'], function ($compileProvider, $sceDelegateProvider) {
+var app = angular.module("CouchtunerCompanion", ['ui.bootstrap', 'ngAnimate', 'snap'], function ($compileProvider, $sceDelegateProvider) {
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|chrome-extension):|data:image\//);
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
     $sceDelegateProvider.resourceUrlWhitelist(["self", "chrome-extension://**"]);

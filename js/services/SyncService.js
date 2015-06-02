@@ -7,59 +7,60 @@
                 bookmarkSync: false,
                 historySync: false,
                 useTvApi: false,
-                tvApiKey: null
+                tvApiKey: null,
+                useMyJson: false
             }
         };
-		var apiUrl = 'https://api.myjson.com/bins';
+        var apiUrl = 'https://api.myjson.com/bins';
         var myJsonApi = {
-            get : function(key, callback){
-                chrome.storage.sync.get(key+'_id', function(retrieved){
-					console.log("Loading...", key, retrieved);
-                    if(!retrieved[key+'_id']){
-						console.log("No key_id found, loading object from Chrome Sync...");
-						chrome.storage.sync.get(key, function(retrieved){
-							console.log("Loaded:", retrieved);
-							var initialPayload = {};
-							if(!retrieved[key]){
-								console.log("Nothing found in Chrome Sync, constructing initial payload fro default values...");
-								initialPayload[key] = data[key];
-							}else {
-								console.log("Setting initial payload to Chrome Storage data for migration.");
-								initialPayload = retrieved;
-							}
-							console.log("Key found, performing initial sync with myjson...");
-							$http.post(apiUrl, initialPayload).success(function(data){
-								console.log("Loaded from myjson:", data);
-								var payload = {};
-								data[key+'_id'] = payload[key+'_id'] = data.uri;
-								chrome.storage.sync.set(payload, function(){
-									console.log("Sync complete!", payload);
-								});
-								callback(retrieved);
-							}).error(function(data){
-								console.error("Error during initial save:", key, data);
-							});
-						});
-					}else {
-						console.log(key+'_id found!:', retrieved[key+'_id']);
-						data[key+'_id'] = retrieved[key+'_id'];
-						$http.get(retrieved[key+'_id']).success(function(data){
-							console.log('Loaded from myjson:', data);
-							callback(data);
-						}).error(function(data){
-							console.error("Error during load:", key, data);
-						});
-					}
+            get: function (key, callback) {
+                chrome.storage.sync.get(key + '_id', function (retrieved) {
+                    console.log("Loading...", key, retrieved);
+                    if (!retrieved[key + '_id']) {
+                        console.log("No key_id found, loading object from Chrome Sync...");
+                        chrome.storage.sync.get(key, function (retrieved) {
+                            console.log("Loaded:", retrieved);
+                            var initialPayload = {};
+                            if (!retrieved[key]) {
+                                console.log("Nothing found in Chrome Sync, constructing initial payload fro default values...");
+                                initialPayload[key] = data[key];
+                            } else {
+                                console.log("Setting initial payload to Chrome Storage data for migration.");
+                                initialPayload = retrieved;
+                            }
+                            console.log("Key found, performing initial sync with myjson...");
+                            $http.post(apiUrl, initialPayload).success(function (data) {
+                                console.log("Loaded from myjson:", data);
+                                var payload = {};
+                                data[key + '_id'] = payload[key + '_id'] = data.uri;
+                                chrome.storage.sync.set(payload, function () {
+                                    console.log("Sync complete!", payload);
+                                });
+                                callback(retrieved);
+                            }).error(function (data) {
+                                console.error("Error during initial save:", key, data);
+                            });
+                        });
+                    } else {
+                        console.log(key + '_id found!:', retrieved[key + '_id']);
+                        data[key + '_id'] = retrieved[key + '_id'];
+                        $http.get(retrieved[key + '_id']).success(function (data) {
+                            console.log('Loaded from myjson:', data);
+                            callback(data);
+                        }).error(function (data) {
+                            console.error("Error during load:", key, data);
+                        });
+                    }
                 });
             },
-			set: function(key, payload, callback){
-				$http.put(data[key+'_id'], payload).success(function(data){
-					console.log("Set, success:", key, data);
-					callback();
-				}).error(function(data){
-					console.error(data);
-				});
-			}
+            set: function (key, payload, callback) {
+                $http.put(data[key + '_id'], payload).success(function (data) {
+                    console.log("Set, success:", key, data);
+                    callback();
+                }).error(function (data) {
+                    console.error(data);
+                });
+            }
         };
 
         function sync(key, callback) {
@@ -91,7 +92,13 @@
                 payload[key] = [];
             }
 
-            storageMethod.set(key, payload, function () {
+            (storageMethod === myJsonApi)
+                ? storageMethod.set(key, payload, function () {
+                if (callback) {
+                    callback();
+                }
+            })
+                : storageMethod.set(payload, function () {
                 if (callback) {
                     callback();
                 }
@@ -104,15 +111,23 @@
          * @returns {*}
          */
         function getStorageMethod(key) {
-            //var storageSync = chrome.storage.sync;
-			var storageSync = myJsonApi;
+            var storageSync = chrome.storage.sync;
+            var storageMyJson = myJsonApi;
             var storageLocal = chrome.storage.local;
-
+            var settings = data['settings'];
             switch (key) {
                 case 'bookmarks':
-                    return (data['settings'].bookmarkSync) ? storageSync : storageLocal;
+                    return (settings.useMyJson)
+                        ? storageMyJson
+                        : ((settings.bookmarkSync)
+                            ? storageSync
+                            : storageLocal);
                 case 'history':
-                    return (data['settings'].historySync === 'Sync') ? storageSync : storageLocal;
+                    return (settings.useMyJson)
+                        ? storageMyJson
+                        : ((settings.historySync === 'Sync')
+                            ? storageSync
+                            : storageLocal);
                 case 'settings':
                     return storageSync;
             }
@@ -140,7 +155,7 @@
                 var episode = getNiceNumber(groups[13]);
 
                 return showName + " - S" + season + "E" + episode;
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -187,7 +202,7 @@
                 return data;
             },
 
-            bookmarkListener: function(){
+            bookmarkListener: function () {
                 console.log('Not initialized.');
             },
             removeBookmark: function (bookmarkIndex) {

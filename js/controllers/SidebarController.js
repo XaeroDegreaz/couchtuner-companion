@@ -3,8 +3,8 @@
  */
 (function () {
     app.controller('SidebarController', [
-        '$scope', '$aside', '$compile', 'SettingsService', 'SyncService', 'BookmarkScanService', 'HistoryScanService', 'TvApiService',
-        function ($scope, $aside, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService, TvApiService) {
+        '$scope', '$compile', 'SettingsService', 'SyncService', 'BookmarkScanService', 'HistoryScanService', 'TvApiService',
+        function ($scope, $compile, SettingsService, SyncService, BookmarkScanService, HistoryScanService, TvApiService) {
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
             $scope.version = manifest.version + (isDevMode ? " - (D)" : "");

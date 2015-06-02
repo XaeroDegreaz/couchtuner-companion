@@ -1,4 +1,5 @@
-<div style="{{'height:'+sidebarService.tabContentHeight+'px;overflow-y:auto;overflow-x:hidden;'}}" ng-controller="SettingsController">
+<div style="{{'height:'+sidebarService.tabContentHeight+'px;overflow-y:auto;overflow-x:hidden;'}}"
+     ng-controller="SettingsController">
     <div class="btn-group" style="width: 100%; margin: 1px;" dropdown dropdown-append-to-body>
         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="width: 100%;" dropdown-toggle>
             History Tracking [{{settings.historySync||'Off'}}] <span class="caret"></span>
@@ -57,6 +58,44 @@
                    ng-model="settings.tvApiKey"
                    placeholder="Enter key here">
         </div>
+    </div>
+    <div>
+        <alert type="danger">Experimental Settings Below!</alert>
+        <accordion close-others="oneAtATime">
+            <accordion-group heading="MyJson Sync Storage">
+                <p>This experimental storage engine, powered by <a href="http://myjson.com/about">Myjson</a>, will allow
+                    users to bypass the storage limits
+                    set by Chrome's built-in sync storage. This is useful if you have lots of bookmarks, and/or
+                    history, but Chrome fails to save them in sync storage because you're using <a
+                            href="https://developer.chrome.com/extensions/storage#property-sync">more than the
+                        limit.</a></p>
+
+                <p>There's nothing that can be done to 100% circumvent this inside the extension, so an outside storage
+                    engine is the only option (or, use Chrome local storage, but be unable to sync information between
+                    devices).</p>
+
+                <p>This implementation is still considered experimental, and enabling it could potentially result in the
+                    loss / corruption of your bookmarks, history and settings.</p>
+
+                <p>Enable this only if you understand this, and are unwilling to simply delete extra bookmarks or
+                    history in order to free up Chrome sync space.</p>
+
+                <p>At this time, enabling this will ignore your storage settings above. This means that both bookmarks
+                    AND history
+                    will be synced using Myjson</p>
+                <label for="use-myjson" class="control-label">
+                    <input id="use-myjson"
+                           type="checkbox"
+                           class="checkbox checkbox-inline"
+                           ng-model="settings.useMyJson" tooltip="asdsad"/> Use MyJson Sync Storage Engine
+                </label>
+
+                <div ng-show="settings.useMyJson">
+                    Bookmarks: <a href="{{getMyjsonBookmarksUri()}}?pretty">{{getMyjsonBookmarksUri()}}</a><br/>
+                    History: <a href="{{getMyjsonHistoryUri()}}?pretty">{{getMyjsonHistoryUri()}}</a><br/>
+                </div>
+            </accordion-group>
+        </accordion>
     </div>
 
     <br ng-show="haveSettingsChanged"/>
