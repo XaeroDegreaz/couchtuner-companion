@@ -176,3 +176,6 @@ FakesAssemblies/
 # IntelliJ
 .idea/
 *.iml
+
+# Symlinks
+couchtuner/common-*

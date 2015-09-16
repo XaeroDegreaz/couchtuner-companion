@@ -1,0 +1,69 @@
+{
+    "manifest_version": 2,
+
+    "name": "Couchtuner Companion",
+    "short_name": "Companion",
+    "description": "This extension extends the functionality of Couchtuner by way of bookmarks, and history.",
+    "version": "0.9.9",
+    "author": "XaeroDegreaz",
+    "homepage_url": "https://github.com/XaeroDegreaz/couchtuner-companion",
+    "icons": {
+        "128": "icon.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*.couchtuner.com/*",
+                "http://*.couchtuner.eu/*",
+                "http://*.couchtuner.eu.com/*",
+                "http://*.couchtuner.com.eu/*",
+                "http://*.couchtuner.la/*",
+                "http://*.zzstream.li/*"
+            ],
+            "css": [
+                "common-css/bootstrap.min.css",
+                "common-css/angular-motion.min.css",
+                "common-css/bootstrap-additions.min.css",
+                "common-css/angular-snap.css",
+                "css/fixbootstrap.css"
+            ],
+            "js": [
+                "common-js/lib/jquery-2.1.1.min.js",
+                "common-js/lib/jquery-regex.js",
+                "common-js/lib/angular.js",
+                "common-js/lib/angular-animate.js",
+                "common-js/lib/ui-bootstrap-tpls-0.13.0.min.js",
+                "common-js/lib/snap.min.js",
+                "common-js/lib/angular-snap.min.js",
+                "common-js/lib/linq.js",
+                "common-js/lib/themoviedb.min.js",
+                "common-js/lib/moment.js",
+                "js/app.js",
+                "common-js/services/SyncService.js",
+                "common-js/services/SettingsService.js",
+                "common-js/services/LinkService.js",
+                "js/services/BookmarkScanService.js",
+                "js/services/HistoryScanService.js",
+                "common-js/services/TvApiService.js",
+                "common-js/services/SidebarService.js",
+                "common-js/controllers/SidebarController.js",
+                "common-js/controllers/SettingsController.js",
+                "common-js/controllers/BookmarkController.js",
+                "common-js/controllers/BookmarkItemController.js",
+                "common-js/controllers/HistoryController.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "common-html/sidebar.html",
+        "common-html/settingsTab.html",
+        "common-html/bookmarksTab.html",
+        "common-html/historyTab.html",
+        "common-html/sidebarButton.html",
+        "common-js/lib/angular-strap.min.js.map",
+        "common-js/lib/jquery-2.1.1.min.map"
+    ]
+}
