@@ -101,7 +101,7 @@
             }
 
             function tryGetData(showId, callback) {
-                if(showId === errorMessage){
+                if (showId === errorMessage) {
                     callback(errorMessage);
                     return;
                 }
@@ -134,7 +134,7 @@
                         return;
                     }
                     findShowByName(showName, function (showResultId) {
-                        if(showResultId === errorMessage){
+                        if (showResultId === errorMessage) {
                             callback(errorMessage);
                             return;
                         }
@@ -152,6 +152,13 @@
                                     var latestSeasonResult = eligibleSeasons[eligibleSeasons.length - 1];
                                     findLatestEpisodeByShowIdAndSeasonNumber(show.id, latestSeasonResult.season_number, callback);
                                 }, function (data) {
+                                    data = JSON.parse(data);
+                                    switch (data.status_code) {
+                                        //# 404
+                                        case 34:
+                                            callback(errorMessage);
+                                            return;
+                                    }
                                     console.error(data);
                                     tryGetData(showId, callback);
                                     $timeout(function () {
