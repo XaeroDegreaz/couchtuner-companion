@@ -20,7 +20,7 @@
                 },
 
                 getShowNameFromLink: function (link) {
-                    return link.html().replace("<strong>", "").replace("</strong>", "");
+                    return getDeepestHtml(link);
                 },
 
                 generateBookmarkButton: function (bookmarkIndex, linkIndex) {
@@ -28,7 +28,7 @@
                     var buttonType = isBookmarked ? "danger" : "success";
                     var buttonText = isBookmarked ? "-" : "+";
                     var button = angular.element("<button class='btn btn-xs btn-" + buttonType + "'>" + buttonText + "</button>");
-                    button.attr("style", "margin-right: 2px; width: 10px;");
+                    button.attr("style", "margin-right: 2px; width: 15px;");
                     button.click(function () {
                         onBookmarkButtonClick(bookmarkIndex, linkIndex);
                     });
@@ -85,18 +85,39 @@
                 }
             }
 
+            function getDeepestHtml(a) {
+                var title = a.attr("title");
+                if (title) {
+                    var regex = /^(.+)\s+(\(\d+\))?\s*$/;
+                    var groups;
+                    if (groups = regex.exec(title)) {
+                        return groups[1];
+                    }
+                }
+
+                var $target = a.children();
+
+                while ($target.length) {
+                    $target = $target.children();
+                }
+
+                return $target.end().html();
+            }
+
             /**
              * Create an array of qualified show links, wrapped in a jQuery selector.
              */
             function populateShowLinks() {
-                $('.entry a[href], #left a[href], #right a[href] ').each(function (index) {
+                $('.table a[href], .table2 a[href]').each(function (index) {
                     var a = $(this);
                     var href = a.attr("href");
                     var html = a.html();
 
-                    if (!a.parent().is("li") && !a.parent().is("strong")) {
+                    if (html.indexOf("<img") != -1 || href.indexOf(".html") == -1) {
                         return;
                     }
+
+                    html = getDeepestHtml(a);
 
                     var regex = /(#)|(google)|(season)|(episode\-)|(tv\-list)/i;
                     var regex2 = /(.+)?(S)(eason)?(.+)?(\d+)(.+)?(E)(pisode)?(.+)?(\d+)/i;
