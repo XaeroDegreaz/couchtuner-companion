@@ -9,7 +9,9 @@
             var isDevMode = (manifest.update_url == null);
             $scope.version = manifest.version + (isDevMode ? " - (D)" : "");
             $scope.tabContentHeight = 0;
-
+            $scope.snapOptions = {
+                touchToDrag: false
+            };
             var onInitialize = function () {
                 //# Tell sync service to do whatever it needs to do to retrieve information from Chrome storage.
                 SyncService.initialize(function () {
