@@ -5,7 +5,9 @@ A Chrome companion extension for the Couchtuner website.
 
 In order to hack on this project, you'll need to create symlinks of all of the common-* dirs inside each implementation.
 
-The symlink approach did not seem to work for Chrome on OSX -- the extension would load correctly in the extension manager, but when using the extensions, all of the files inside symlinked folders seemed to be blank in the inspector. Your mileage may vary. However, I was able to get symlinks working flawlessly on my Windows computer.
+The symlink approach did not seem to work for Chrome on OSX -- the extension would load correctly in the extension manager, but when using the extensions, all of the files inside symlinked folders seemed to be blank in the inspector. I had to copy the real folders directly into the dir, but have to ensure that if you need to modify something in a common file, you do ir in the orifinal dirs, and re-copy them :(
+
+Your mileage may vary. However, I was able to get symlinks working flawlessly on my Windows computer.
 
 Example:
 
