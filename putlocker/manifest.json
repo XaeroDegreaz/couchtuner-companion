@@ -36,6 +36,7 @@
                 "common-js/services/SyncService.js",
                 "common-js/services/SettingsService.js",
                 "common-js/services/LinkService.js",
+                "js/services/ScanUtil.js",
                 "js/services/BookmarkScanService.js",
                 "js/services/HistoryScanService.js",
                 "common-js/services/TvApiService.js",

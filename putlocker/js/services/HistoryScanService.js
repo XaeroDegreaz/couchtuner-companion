@@ -2,8 +2,8 @@
  * Created by XaeroDegreaz on 11/24/2014.
  */
 (function () {
-    app.service('HistoryScanService', ['SyncService', function (SyncService) {
-        var historyLinkRegex = "(.+)?(S)(eason)?(.+)?(\\d+)(.+)?(E)(pisode)?(.+)?(\\d+)";
+    app.service('HistoryScanService', function (SyncService, ScanUtil) {
+        var historyLinkRegex = "(.+?tvshow.*)(S)(eason)?(.+)?(\\d+)(.+)?(E)(pisode)?(.+)?(\\d+)";
         var hasHistoryPropogated = false;
 
         function parseHistoryTrackableLinks() {
@@ -16,10 +16,10 @@
         function addHistoryItem(event) {
             if (!hasHistoryPropogated) {
                 event.preventDefault();
-                var a = $(event.target);
+                var a = $(event.currentTarget);
                 var link = a.attr('href');
                 var name = a.html();
-                SyncService.addHistoryItem(new HistoryItem(link, name));
+                SyncService.addHistoryItem(new HistoryItem(link, ScanUtil.getDeepestHtml(a)));
                 //# Place this property inside the link instead of scope polluting
                 hasHistoryPropogated = true;
                 $(this).trigger('click');
@@ -40,7 +40,7 @@
             return niceNumber;
         }
 
-        function getNiceName (string) {
+        function getNiceName(string) {
             var regex = /(.+>)?([\w '.,"]+)(.+)(S)(eason)?(\D+)?(\d+)(.+)?([eE])(pisode)?(\D+)?(\d+)/;
             var groups = regex.exec(string);
             var showName = groups[2];
@@ -50,7 +50,7 @@
             return showName + " - S" + season + "E" + episode;
         }
 
-        return{
+        return {
             initialize: function () {
                 parseHistoryTrackableLinks();
             },
@@ -58,5 +58,5 @@
                 return getNiceName(string);
             }
         }
-    }]);
+    });
 })();
