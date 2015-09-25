@@ -9,7 +9,9 @@
             var isDevMode = (manifest.update_url == null);
             $scope.version = manifest.version + (isDevMode ? " - (D)" : "");
             $scope.tabContentHeight = 0;
-
+            $scope.snapOptions = {
+                touchToDrag: false
+            };
             var onInitialize = function () {
                 //# Tell sync service to do whatever it needs to do to retrieve information from Chrome storage.
                 SyncService.initialize(function () {
@@ -23,9 +25,9 @@
                     TvApiService.initialize();
 
                     $scope.tabs = {
-                        settingsTab: chrome.extension.getURL("html/settingsTab.html"),
-                        bookmarksTab: chrome.extension.getURL("html/bookmarksTab.html"),
-                        historyTab: chrome.extension.getURL("html/historyTab.html")
+                        settingsTab: chrome.extension.getURL("common-html/settingsTab.html"),
+                        bookmarksTab: chrome.extension.getURL("common-html/bookmarksTab.html"),
+                        historyTab: chrome.extension.getURL("common-html/historyTab.html")
                     };
                 });
             }();
