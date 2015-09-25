@@ -3,7 +3,7 @@
     "name": "Putlocker Companion",
     "short_name": "Companion",
     "description": "This extension extends the functionality of Putlocker by way of bookmarks, and history.",
-    "version": "0.0.1",
+    "version": "0.9.0",
     "author": "XaeroDegreaz",
     "homepage_url": "https://github.com/XaeroDegreaz/couchtuner-companion",
     "permissions": [
