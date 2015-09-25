@@ -40,7 +40,7 @@
                     {{bookmark.name}}
                 </div>
             </div>
-            <div>
+            <div style="color: #CCCCCC">
                 {{dateCompare < 0 ? 'Last' :'Next'}} Episode:
                 <span class="text-{{(bannerString === null) ? 'warning' : ((dateCompare < 0) ? 'danger' :'success')}}">
                     {{(bannerString === null) ? 'Disabled in settings' : bannerString | date}}

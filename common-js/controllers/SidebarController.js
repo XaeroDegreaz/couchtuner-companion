@@ -8,6 +8,8 @@
             var manifest = chrome.runtime.getManifest();
             var isDevMode = (manifest.update_url == null);
             $scope.version = manifest.version + (isDevMode ? " - (D)" : "");
+            $scope.companionName = manifest.name;
+            $scope.companionGitName = $scope.companionName.replace(" ", "-").toLowerCase();
             $scope.tabContentHeight = 0;
             $scope.snapOptions = {
                 touchToDrag: false
