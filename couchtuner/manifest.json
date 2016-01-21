@@ -21,6 +21,8 @@
                 "http://*.couchtuner.eu.com/*",
                 "http://*.couchtuner.com.eu/*",
                 "http://*.couchtuner.la/*",
+                "http://*.couchtuner.ag/*",
+                "http://*.couchtuner.ch/*",
                 "http://*.zzstream.li/*"
             ],
             "css": [
