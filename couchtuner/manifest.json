@@ -24,7 +24,8 @@
                 "http://*.couchtuner.ag/*",
                 "http://*.couchtuner.ch/*",
                 "http://*.couchtuner.city/*",
-                "http://*.zzstream.li/*"
+                "http://*.zzstream.li/*",
+                "http://*.couch-tuner.ag/*"
             ],
             "css": [
                 "common-css/bootstrap.min.css",
