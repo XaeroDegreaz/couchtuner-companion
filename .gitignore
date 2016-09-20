@@ -180,3 +180,4 @@ FakesAssemblies/
 # Symlinks
 couchtuner/common-*
 putlocker/common-*
+*.zip
